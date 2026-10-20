@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python: if, elif, else</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FBF3E6;
+    --card: #FFFDF8;
+    --line: #EAD2B2;
+    --ink: #3B2418;
+    --soft: #6B4E3D;
+    --rust: #9A4320;
+    --gold: #E8A93A;
+    --code-bg: #3B2418;
+    --code-ink: #F8E8D0;
+    --green: #2F6B3A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito Sans', Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 16px 64px; }
+  header { margin-bottom: 32px; }
+  .kicker {
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    font-size: 14px; color: var(--rust); margin: 0 0 4px;
+  }
+  h1, h2 { font-family: 'Fredoka', Arial, sans-serif; font-weight: 600; line-height: 1.15; }
+  h1 { font-size: 40px; margin: 0 0 12px; }
+  h2 { font-size: 28px; margin: 0 0 12px; }
+  h3 { font-size: 20px; margin: 20px 0 8px; }
+  p { margin: 0 0 12px; }
+  section {
+    background: var(--card); border: 2px solid var(--line); border-radius: 18px;
+    padding: 24px; margin-bottom: 24px;
+  }
+  .step {
+    display: inline-block; background: var(--rust); color: #FBF3E6;
+    font-weight: 700; font-size: 14px; border-radius: 999px; padding: 2px 12px; margin-bottom: 8px;
+  }
+  pre {
+    background: var(--code-bg); color: var(--code-ink); border-radius: 12px;
+    padding: 16px 18px; overflow-x: auto; margin: 0 0 12px;
+    font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 16px; line-height: 1.6;
+  }
+  code { font-family: 'JetBrains Mono', 'Courier New', monospace; }
+  p code, li code, td code {
+    background: #F5E4CC; padding: 1px 6px; border-radius: 6px; font-size: 0.92em;
+  }
+  .k { color: #F2A65A; font-weight: 600; }
+  .s { color: #B9D98C; }
+  .n { color: #9CCFE0; }
+  .c { color: #C9A98A; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { color: var(--rust); font-size: 15px; text-transform: uppercase; letter-spacing: 1px; }
+  .video {
+    position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px;
+    overflow: hidden; background: #000; margin-bottom: 12px;
+  }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .flow { display: flex; justify-content: center; margin: 8px 0 12px; }
+  .flow svg { width: 100%; max-width: 520px; height: auto; }
+  .quiz { display: grid; gap: 12px; }
+  .q {
+    border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px;
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+  }
+  .q span { flex: 1 1 220px; }
+  button {
+    font: inherit; font-weight: 700; font-size: 16px; cursor: pointer;
+    background: var(--gold); color: var(--ink); border: 0; border-radius: 999px; padding: 6px 16px;
+  }
+  button:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
+  .ans { font-weight: 700; color: var(--green); }
+  .ans[hidden] { display: none; }
+  ul, ol { padding-left: 22px; margin: 0 0 12px; }
+  li { margin-bottom: 6px; }
+  .tip {
+    background: #F5E4CC; border-left: 6px solid var(--gold); border-radius: 8px;
+    padding: 10px 14px; margin: 12px 0;
+  }
+  footer { text-align: center; color: var(--soft); font-size: 15px; }
+
+  /* Thonny-style editor */
+  .open-btn { margin: -2px 0 14px; background: #DCEBD0; color: #23502B; }
+  .thonny {
+    border: 1px solid #B8B8B8; border-radius: 10px; overflow: hidden;
+    background: #ECECEC; color: #1E1E1E; font-family: Arial, sans-serif; font-size: 15px;
+  }
+  .t-title {
+    background: #DADADA; border-bottom: 1px solid #C4C4C4; padding: 6px 12px;
+    font-size: 13px; color: #444; display: flex; align-items: center; gap: 8px;
+  }
+  .t-dots span { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 4px; }
+  .t-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 10px; border-bottom: 1px solid #C4C4C4; align-items: center; }
+  .t-btn {
+    display: inline-flex; align-items: center; gap: 6px; background: #FAFAFA; color: #1E1E1E;
+    border: 1px solid #BDBDBD; border-radius: 6px; padding: 5px 12px; font-size: 14px; font-weight: 700;
+  }
+  .t-btn:disabled { opacity: 0.5; cursor: default; }
+  .t-run svg { fill: #3DA33D; }
+  .t-stop svg { fill: #D23C3C; }
+  .t-status { margin-left: auto; font-size: 13px; color: #555; }
+  .t-tab {
+    display: inline-block; background: #FFFFFF; border: 1px solid #C4C4C4; border-bottom: 0;
+    border-radius: 6px 6px 0 0; padding: 3px 12px; font-size: 13px; margin: 8px 0 0 10px;
+  }
+  .t-pane { background: #FFFFFF; border-top: 1px solid #C4C4C4; }
+  .t-edit { display: flex; height: 260px; }
+  .t-gutter {
+    background: #F3F3F3; color: #9A9A9A; text-align: right; padding: 10px 8px 10px 6px;
+    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 15px; line-height: 1.5;
+    min-width: 38px; overflow: hidden; white-space: pre; user-select: none; border-right: 1px solid #E2E2E2;
+  }
+  .t-code {
+    flex: 1; border: 0; outline: 0; resize: none; padding: 10px 12px; margin: 0;
+    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 15px; line-height: 1.5;
+    color: #1E1E1E; background: #FFFFFF; white-space: pre; overflow: auto; tab-size: 4;
+  }
+  .t-shell {
+    height: 190px; overflow-y: auto; padding: 8px 12px; white-space: pre-wrap; word-break: break-word;
+    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 15px; line-height: 1.5;
+  }
+  .t-shell .prompt { color: #4B7BBE; }
+  .t-shell .runcmd { color: #4B7BBE; }
+  .t-shell .err { color: #C62828; }
+  .t-shell .inp { color: #1E7D32; font-weight: 600; }
+  .t-in { display: flex; align-items: center; gap: 6px; border-top: 1px solid #E2E2E2; padding: 6px 12px; background: #FFFFFF; }
+  .t-in label { font-family: 'JetBrains Mono', Consolas, monospace; color: #4B7BBE; font-size: 15px; white-space: nowrap; }
+  .t-in input {
+    flex: 1; min-width: 0; border: 1px solid #CFCFCF; border-radius: 4px; padding: 5px 8px;
+    font-family: 'JetBrains Mono', Consolas, monospace; font-size: 15px;
+  }
+  .t-in input.waiting { border-color: #3DA33D; box-shadow: 0 0 0 3px #DCEBD0; }
+  .t-help { font-size: 15px; color: var(--soft); margin-top: 10px; }
+  a { color: var(--rust); }
+  @media (max-width: 480px) {
+    h1 { font-size: 32px; }
+    section { padding: 18px; }
+    pre { font-size: 14px; }
+    table { font-size: 15px; }
+    th, td { padding: 6px 5px; }
+    th { font-size: 12px; letter-spacing: 0; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <p class="kicker">Year 7 Digital Technologies · Python IV</p>
+  <h1>Python: if, elif, else</h1>
+  <p>Programs make decisions. They check a condition. If it is <b>True</b>, they do one thing. If it is <b>False</b>, they do something else.</p>
+</header>
+
+<section>
+  <span class="step">1</span>
+  <h2>Watch the video</h2>
+  <div class="video">
+    <iframe src="https://www.youtube-nocookie.com/embed/FvMPfrgGeKs" title="If statements in Python are easy (if, elif, else) by Bro Code" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+  <p>Video not loading? <a href="https://www.youtube.com/watch?v=FvMPfrgGeKs" target="_blank" rel="noopener">Open it on YouTube</a>.</p>
+</section>
+
+<section>
+  <span class="step">2</span>
+  <h2>Comparison operators</h2>
+  <p>A condition compares two values. The answer is always <code>True</code> or <code>False</code>.</p>
+  <table>
+    <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Answer</th></tr>
+    <tr><td><code>==</code></td><td>equal to</td><td><code>5 == 5</code></td><td>True</td></tr>
+    <tr><td><code>!=</code></td><td>not equal to</td><td><code>5 != 3</code></td><td>True</td></tr>
+    <tr><td><code>&gt;</code></td><td>greater than</td><td><code>7 &gt; 10</code></td><td>False</td></tr>
+    <tr><td><code>&lt;</code></td><td>less than</td><td><code>2 &lt; 9</code></td><td>True</td></tr>
+    <tr><td><code>&gt;=</code></td><td>greater than or equal to</td><td><code>3 &gt;= 3</code></td><td>True</td></tr>
+    <tr><td><code>&lt;=</code></td><td>less than or equal to</td><td><code>4 &lt;= 1</code></td><td>False</td></tr>
+  </table>
+  <div class="tip"><b>Remember:</b> <code>=</code> stores a value. <code>==</code> compares two values.</div>
+</section>
+
+<section>
+  <span class="step">3</span>
+  <h2>How if, elif and else work</h2>
+  <pre id="code-score">score = <span class="k">int</span>(<span class="k">input</span>(<span class="s">"Score out of 100: "</span>))
+<span class="k">if</span> score &gt;= <span class="n">80</span>:
+    <span class="k">print</span>(<span class="s">"Excellent"</span>)
+<span class="k">elif</span> score &gt;= <span class="n">50</span>:
+    <span class="k">print</span>(<span class="s">"Pass"</span>)
+<span class="k">else</span>:
+    <span class="k">print</span>(<span class="s">"Try again"</span>)</pre>
+  <button type="button" class="open-btn" data-load="code-score">Open in the Python editor</button>
+  <ul>
+    <li><code>if</code> checks the first condition.</li>
+    <li><code>elif</code> means "else if". It checks the next condition only if the one before was False.</li>
+    <li><code>else</code> runs when every condition above was False. It has no condition.</li>
+    <li>Python runs <b>only one</b> branch: the first one that is True.</li>
+  </ul>
+  <h3>The same program as a flowchart</h3>
+  <p>Each diamond is one condition. Each diamond has a True path and a False path.</p>
+  <div class="flow">
+    <svg viewBox="0 0 520 420" role="img" aria-label="Flowchart: input score. Diamond: score at least 80? True goes to print Excellent. False goes to diamond: score at least 50? True goes to print Pass. False goes to print Try again.">
+      <defs>
+        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0 0 L10 5 L0 10Z" fill="#3B2418"/>
+        </marker>
+      </defs>
+      <g font-family="Nunito Sans, Arial, sans-serif" font-size="16" fill="#3B2418">
+        <rect x="140" y="10" width="160" height="44" rx="22" fill="#F5E4CC" stroke="#3B2418" stroke-width="2"/>
+        <text x="220" y="38" text-anchor="middle">Input score</text>
+        <line x1="220" y1="54" x2="220" y2="86" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
+        <polygon points="220,88 310,140 220,192 130,140" fill="#E8A93A" stroke="#3B2418" stroke-width="2"/>
+        <text x="220" y="145" text-anchor="middle">score &gt;= 80?</text>
+        <line x1="310" y1="140" x2="368" y2="140" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="338" y="130" text-anchor="middle" font-weight="700">True</text>
+        <rect x="370" y="118" width="140" height="44" rx="8" fill="#FFFDF8" stroke="#3B2418" stroke-width="2"/>
+        <text x="440" y="145" text-anchor="middle">Excellent</text>
+        <line x1="220" y1="192" x2="220" y2="224" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="236" y="214" font-weight="700">False</text>
+        <polygon points="220,226 310,278 220,330 130,278" fill="#E8A93A" stroke="#3B2418" stroke-width="2"/>
+        <text x="220" y="283" text-anchor="middle">score &gt;= 50?</text>
+        <line x1="310" y1="278" x2="368" y2="278" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="338" y="268" text-anchor="middle" font-weight="700">True</text>
+        <rect x="370" y="256" width="140" height="44" rx="8" fill="#FFFDF8" stroke="#3B2418" stroke-width="2"/>
+        <text x="440" y="283" text-anchor="middle">Pass</text>
+        <line x1="220" y1="330" x2="220" y2="362" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
+        <text x="236" y="352" font-weight="700">False</text>
+        <rect x="150" y="364" width="140" height="44" rx="8" fill="#FFFDF8" stroke="#3B2418" stroke-width="2"/>
+        <text x="220" y="391" text-anchor="middle">Try again</text>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<section id="editor">
+  <span class="step">4</span>
+  <h2>Python editor</h2>
+  <p>Type your code at the top, then press <b>Run</b>. The answers appear in the <b>Shell</b>. When your program asks a question, type your answer in the box at the bottom and press Enter.</p>
+  <div class="thonny">
+    <div class="t-title"><span class="t-dots"><span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span></span>Python editor</div>
+    <div class="t-bar">
+      <button type="button" class="t-btn t-run" id="runBtn" aria-label="Run program"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1 L13 7 L2 13Z"/></svg>Run</button>
+      <button type="button" class="t-btn t-stop" id="stopBtn" aria-label="Stop program" disabled><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1"/></svg>Stop</button>
+      <button type="button" class="t-btn" id="clearBtn">Clear Shell</button>
+      <span class="t-status" id="pyStatus">Python starts when you press Run</span>
+    </div>
+    <span class="t-tab">editor.py</span>
+    <div class="t-pane t-edit">
+      <div class="t-gutter" id="gutter" aria-hidden="true">1</div>
+      <textarea class="t-code" id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Python code">name = input("What is your name? ")
+print(f"Hello, {name}!")</textarea>
+    </div>
+    <span class="t-tab">Shell</span>
+    <div class="t-pane">
+      <div class="t-shell" id="shell" aria-live="polite"></div>
+      <div class="t-in">
+        <label for="shellIn" id="shellLabel">&gt;&gt;&gt;</label>
+        <input id="shellIn" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Type here and press Enter">
+      </div>
+    </div>
+  </div>
+  <p class="t-help">Tip: after a run, you can type a variable name in the Shell, like <code>score</code>, to see what it holds. If the page freezes, your loop never stopped: reload the page.</p>
+</section>
+
+<section>
+  <span class="step">5</span>
+  <h2>Predict the output</h2>
+  <p>Use the score program above. Predict first, then click to check. Then run it in the Python editor to test.</p>
+  <div class="quiz">
+    <div class="q"><span>The user types <code>95</code></span><button type="button" data-a="a1">Check</button><span class="ans" id="a1" hidden>Excellent</span></div>
+    <div class="q"><span>The user types <code>80</code></span><button type="button" data-a="a2">Check</button><span class="ans" id="a2" hidden>Excellent (80 &gt;= 80 is True)</span></div>
+    <div class="q"><span>The user types <code>79</code></span><button type="button" data-a="a3">Check</button><span class="ans" id="a3" hidden>Pass</span></div>
+    <div class="q"><span>The user types <code>50</code></span><button type="button" data-a="a4">Check</button><span class="ans" id="a4" hidden>Pass</span></div>
+    <div class="q"><span>The user types <code>49</code></span><button type="button" data-a="a5">Check</button><span class="ans" id="a5" hidden>Try again</span></div>
+    <div class="q"><span>The user types <code>95</code>. Why does it not print "Pass" too?</span><button type="button" data-a="a6">Check</button><span class="ans" id="a6" hidden>Python stops at the first True branch.</span></div>
+  </div>
+</section>
+
+<section>
+  <span class="step">6</span>
+  <h2>Build it in Thonny: the sorting hat</h2>
+  <p>Write the pseudocode first. Then type the code and test every colour.</p>
+  <pre id="code-hat"><span class="c"># Sorting hat</span>
+colour = <span class="k">input</span>(<span class="s">"Favourite colour? "</span>)
+<span class="k">if</span> colour == <span class="s">"red"</span>:
+    <span class="k">print</span>(<span class="s">"Fire House"</span>)
+<span class="k">elif</span> colour == <span class="s">"blue"</span>:
+    <span class="k">print</span>(<span class="s">"Water House"</span>)
+<span class="k">elif</span> colour == <span class="s">"green"</span>:
+    <span class="k">print</span>(<span class="s">"Forest House"</span>)
+<span class="k">else</span>:
+    <span class="k">print</span>(<span class="s">"Sky House"</span>)</pre>
+  <button type="button" class="open-btn" data-load="code-hat">Open in the Python editor</button>
+  <h3>Test it</h3>
+  <table>
+    <tr><th>Type this</th><th>Expected output</th></tr>
+    <tr><td><code>red</code></td><td>Fire House</td></tr>
+    <tr><td><code>blue</code></td><td>Water House</td></tr>
+    <tr><td><code>green</code></td><td>Forest House</td></tr>
+    <tr><td><code>purple</code></td><td>Sky House</td></tr>
+    <tr><td><code>Red</code></td><td>Sky House (capital R is not the same as small r)</td></tr>
+  </table>
+  <h3>Your turn</h3>
+  <ol>
+    <li>Add one more <code>elif</code> for a new colour and a new house.</li>
+    <li>Change the questions so it recommends a snack, a game or a song instead.</li>
+  </ol>
+</section>
+
+<section>
+  <span class="step">7</span>
+  <h2>Challenge: password strength checker</h2>
+  <p><code>len()</code> counts the characters in a string. <code>len("cat")</code> gives <code>3</code>.</p>
+  <pre id="code-pw"><span class="c"># Password strength checker</span>
+password = <span class="k">input</span>(<span class="s">"Password: "</span>)
+<span class="k">if</span> <span class="k">len</span>(password) &gt;= <span class="n">12</span>:
+    <span class="k">print</span>(<span class="s">"Strong"</span>)
+<span class="k">elif</span> <span class="k">len</span>(password) &gt;= <span class="n">8</span>:
+    <span class="k">print</span>(<span class="s">"Medium"</span>)
+<span class="k">else</span>:
+    <span class="k">print</span>(<span class="s">"Weak"</span>)</pre>
+  <button type="button" class="open-btn" data-load="code-pw">Open in the Python editor</button>
+  <table>
+    <tr><th>Type this</th><th>Characters</th><th>Expected output</th></tr>
+    <tr><td><code>cat</code></td><td>3</td><td>Weak</td></tr>
+    <tr><td><code>sunshine</code></td><td>8</td><td>Medium</td></tr>
+    <tr><td><code>sunshine1234</code></td><td>12</td><td>Strong</td></tr>
+  </table>
+  <div class="tip">Never type your real password into a program. Make one up for testing.</div>
+</section>
+
+<section>
+  <span class="step">8</span>
+  <h2>Common mistakes</h2>
+  <ul>
+    <li>Using <code>=</code> instead of <code>==</code> in a condition. This gives a SyntaxError.</li>
+    <li>Forgetting the colon <code>:</code> at the end of <code>if</code>, <code>elif</code> or <code>else</code>.</li>
+    <li>Forgetting to indent the line under <code>if</code>. Use 4 spaces (Thonny does it for you).</li>
+    <li>Comparing a number from <code>input()</code> without <code>int()</code>. <code>"90" &gt;= 80</code> gives a TypeError.</li>
+    <li>Putting a condition after <code>else</code>. Only <code>if</code> and <code>elif</code> have conditions.</li>
+  </ul>
+</section>
+
+<footer>Golden International School · Year 7 Digital Technologies</footer>
+
+</main>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+<script>
+(function () {
+  var code = document.getElementById('code');
+  var gutter = document.getElementById('gutter');
+  var shell = document.getElementById('shell');
+  var shellIn = document.getElementById('shellIn');
+  var shellLabel = document.getElementById('shellLabel');
+  var runBtn = document.getElementById('runBtn');
+  var stopBtn = document.getElementById('stopBtn');
+  var clearBtn = document.getElementById('clearBtn');
+  var statusEl = document.getElementById('pyStatus');
+  var py = null, booting = null, running = false, pending = null;
+  var decOut = new TextDecoder(), decErr = new TextDecoder();
+
+  /* ---------- editor ---------- */
+  function updateGutter() {
+    var n = code.value.split('\n').length, s = '';
+    for (var i = 1; i <= n; i++) s += i + '\n';
+    gutter.textContent = s;
+    gutter.scrollTop = code.scrollTop;
+  }
+  code.addEventListener('input', updateGutter);
+  code.addEventListener('scroll', function () { gutter.scrollTop = code.scrollTop; });
+  code.addEventListener('keydown', function (e) {
+    var start = code.selectionStart, end = code.selectionEnd, v = code.value;
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      code.setRangeText('    ', start, end, 'end');
+      updateGutter();
+    } else if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      var lineStart = v.lastIndexOf('\n', start - 1) + 1;
+      var line = v.slice(lineStart, start);
+      var indent = line.match(/^ */)[0];
+      if (/:\s*$/.test(line)) indent += '    ';
+      code.setRangeText('\n' + indent, start, end, 'end');
+      updateGutter();
+    } else if (e.key === 'Backspace' && start === end) {
+      var ls = v.lastIndexOf('\n', start - 1) + 1;
+      var before = v.slice(ls, start);
+      if (before.length > 0 && before.length % 4 === 0 && /^ +$/.test(before)) {
+        e.preventDefault();
+        code.setRangeText('', start - 4, start, 'end');
+        updateGutter();
+      }
+    }
+  });
+  updateGutter();
+
+  /* ---------- shell ---------- */
+  function write(text, cls) {
+    if (!text) return;
+    var last = shell.lastChild;
+    if (last && last.nodeType === 1 && last.className === (cls || 'out')) {
+      last.textContent += text;
+    } else {
+      var span = document.createElement('span');
+      span.className = cls || 'out';
+      span.textContent = text;
+      shell.appendChild(span);
+    }
+    shell.scrollTop = shell.scrollHeight;
+  }
+  function setStatus(t) { statusEl.textContent = t; }
+  function setRunning(on) {
+    running = on;
+    stopBtn.disabled = !on;
+    setStatus(on ? 'Running...' : 'Ready');
+  }
+
+  /* ---------- Python ---------- */
+  var DRIVER = [
+    'import ast, sys, traceback',
+    'from js import askInput',
+    'async def __ainput(prompt=""):',
+    '    print(prompt, end="")',
+    '    sys.stdout.flush()',
+    '    try:',
+    '        return str(await askInput())',
+    '    except Exception:',
+    '        raise KeyboardInterrupt',
+    'class _AwaitInput(ast.NodeTransformer):',
+    '    depth = 0',
+    '    def _inside(self, node):',
+    '        self.depth += 1',
+    '        self.generic_visit(node)',
+    '        self.depth -= 1',
+    '        return node',
+    '    visit_FunctionDef = _inside',
+    '    visit_AsyncFunctionDef = _inside',
+    '    visit_Lambda = _inside',
+    '    visit_ClassDef = _inside',
+    '    def visit_Call(self, node):',
+    '        self.generic_visit(node)',
+    '        if self.depth == 0 and isinstance(node.func, ast.Name) and node.func.id == "input":',
+    '            node.func = ast.copy_location(ast.Name("__ainput", ast.Load()), node.func)',
+    '            return ast.copy_location(ast.Await(node), node)',
+    '        return node',
+    'user_ns = {"__name__": "__main__"}',
+    '_src_lines = []',
+    'def _show_error(e, files=("<editor>", "<shell>")):',
+    '    if isinstance(e, SyntaxError):',
+    '        if e.lineno:',
+    '            print(f\'  File "editor.py", line {e.lineno}\', file=sys.stderr)',
+    '        if e.text:',
+    '            t = e.text.rstrip("\\n")',
+    '            stripped = t.lstrip()',
+    '            print("    " + stripped, file=sys.stderr)',
+    '            if e.offset:',
+    '                col = max(e.offset - 1 - (len(t) - len(stripped)), 0)',
+    '                print("    " + " " * col + "^", file=sys.stderr)',
+    '        print(f"{type(e).__name__}: {e.msg}", file=sys.stderr)',
+    '        return',
+    '    frames = [f for f in traceback.extract_tb(e.__traceback__) if f.filename in files]',
+    '    if frames:',
+    '        print("Traceback (most recent call last):", file=sys.stderr)',
+    '        for f in frames:',
+    '            name = "editor.py" if f.filename == "<editor>" else "<shell>"',
+    '            print(f\'  File "{name}", line {f.lineno}, in {f.name}\', file=sys.stderr)',
+    '            if f.filename == "<editor>" and 0 < f.lineno <= len(_src_lines):',
+    '                print("    " + _src_lines[f.lineno - 1].strip(), file=sys.stderr)',
+    '    msg = str(e)',
+    '    print(f"{type(e).__name__}: {msg}" if msg else type(e).__name__, file=sys.stderr)',
+    'async def run_user(src):',
+    '    global user_ns, _src_lines',
+    '    user_ns = {"__name__": "__main__", "__ainput": __ainput}',
+    '    _src_lines = src.splitlines()',
+    '    try:',
+    '        tree = ast.parse(src, "<editor>")',
+    '        tree = ast.fix_missing_locations(_AwaitInput().visit(tree))',
+    '        compiled = compile(tree, "<editor>", "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)',
+    '    except SyntaxError as e:',
+    '        _show_error(e)',
+    '        return',
+    '    try:',
+    '        result = eval(compiled, user_ns)',
+    '        if result is not None and hasattr(result, "__await__"):',
+    '            await result',
+    '    except KeyboardInterrupt:',
+    '        print("\\nKeyboardInterrupt: program stopped", file=sys.stderr)',
+    '    except BaseException as e:',
+    '        _show_error(e)',
+    '    sys.stdout.flush(); sys.stderr.flush()',
+    'def run_shell(line):',
+    '    try:',
+    '        try:',
+    '            value = eval(compile(line, "<shell>", "eval"), user_ns)',
+    '            if value is not None:',
+    '                print(repr(value))',
+    '        except SyntaxError:',
+    '            exec(compile(line, "<shell>", "exec"), user_ns)',
+    '    except BaseException as e:',
+    '        _show_error(e, ("<shell>",))',
+    '    sys.stdout.flush(); sys.stderr.flush()'
+  ].join('\n');
+
+  window.askInput = function () {
+    return new Promise(function (resolve, reject) {
+      pending = { resolve: resolve, reject: reject };
+      shellLabel.textContent = 'Answer:';
+      shellIn.classList.add('waiting');
+      shellIn.placeholder = 'Type your answer and press Enter';
+      shellIn.focus({ preventScroll: true });
+    });
+  };
+  function endWaiting() {
+    pending = null;
+    shellLabel.textContent = '>>>';
+    shellIn.classList.remove('waiting');
+    shellIn.placeholder = 'Type here and press Enter';
+  }
+
+  function boot() {
+    if (booting) return booting;
+    if (typeof loadPyodide !== 'function') {
+      setStatus('Python could not load');
+      write('Python could not load. Check the internet connection, or use Thonny.\n', 'err');
+      return Promise.reject(new Error('no pyodide'));
+    }
+    setStatus('Starting Python (the first time takes a few seconds)...');
+    booting = loadPyodide().then(function (p) {
+      py = p;
+      py.setStdout({ raw: function (c) { write(decOut.decode(new Uint8Array([c]), { stream: true })); } });
+      py.setStderr({ raw: function (c) { write(decErr.decode(new Uint8Array([c]), { stream: true }), 'err'); } });
+      py.setStdin({ stdin: function () { var a = window.prompt('Your program is asking for input:'); return a === null ? '' : a; } });
+      py.runPython(DRIVER);
+      setStatus('Ready');
+      return py;
+    }).catch(function (err) {
+      booting = null;
+      setStatus('Python could not load');
+      write('Python could not load. Check the internet connection, or use Thonny.\n', 'err');
+      throw err;
+    });
+    return booting;
+  }
+
+  function run() {
+    if (running) return;
+    boot().then(function () {
+      shell.textContent = '';
+      write('>>> ', 'prompt');
+      write('%Run editor.py\n', 'runcmd');
+      setRunning(true);
+      py.globals.set('__src', code.value);
+      return py.runPythonAsync('await run_user(__src)');
+    }).catch(function (err) {
+      if (py) write(String(err) + '\n', 'err');
+    }).then(function () {
+      if (pending) endWaiting();
+      if (py) {
+        var t = shell.textContent;
+        write((t && t.slice(-1) !== '\n' ? '\n' : '') + '>>> ', 'prompt');
+        setRunning(false);
+      }
+    });
+  }
+
+  runBtn.addEventListener('click', run);
+  code.addEventListener('keydown', function (e) {
+    if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && e.key === 'Enter')) { e.preventDefault(); run(); }
+  });
+  stopBtn.addEventListener('click', function () {
+    if (pending) { var p = pending; endWaiting(); p.reject(new Error('stop')); }
+  });
+  clearBtn.addEventListener('click', function () { shell.textContent = ''; });
+
+  shellIn.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter') return;
+    var text = shellIn.value;
+    shellIn.value = '';
+    if (pending) {
+      var p = pending;
+      write(text + '\n', 'inp');
+      endWaiting();
+      p.resolve(text);
+      return;
+    }
+    if (running || !text.trim()) return;
+    boot().then(function () {
+      if (!shell.lastChild || shell.lastChild.className !== 'prompt') write('>>> ', 'prompt');
+      write(text + '\n', 'inp');
+      py.globals.set('__line', text);
+      py.runPython('run_shell(__line)');
+      write('>>> ', 'prompt');
+    });
+  });
+
+  document.querySelectorAll('button[data-load]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      code.value = document.getElementById(b.getAttribute('data-load')).textContent;
+      updateGutter();
+      document.getElementById('editor').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      boot().catch(function () {});
+    });
+  });
+})();
+
+  document.querySelectorAll('button[data-a]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var a = document.getElementById(b.getAttribute('data-a'));
+      var show = a.hidden;
+      a.hidden = !show;
+      b.textContent = show ? 'Hide' : 'Check';
+    });
+  });
+</script>
+</body>
+</html>
