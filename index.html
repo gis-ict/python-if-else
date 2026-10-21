@@ -1,626 +1,1108 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-GB">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Python: if, elif, else</title>
+<title>Y7 Selection: if, elif, else</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #FBF3E6;
-    --card: #FFFDF8;
-    --line: #EAD2B2;
-    --ink: #3B2418;
-    --soft: #6B4E3D;
-    --rust: #9A4320;
-    --gold: #E8A93A;
-    --code-bg: #3B2418;
-    --code-ink: #F8E8D0;
-    --green: #2F6B3A;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Nunito Sans', Arial, sans-serif;
-    font-size: 18px;
-    line-height: 1.6;
-  }
-  main { max-width: 820px; margin: 0 auto; padding: 32px 16px 64px; }
-  header { margin-bottom: 32px; }
-  .kicker {
-    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
-    font-size: 14px; color: var(--rust); margin: 0 0 4px;
-  }
-  h1, h2 { font-family: 'Fredoka', Arial, sans-serif; font-weight: 600; line-height: 1.15; }
-  h1 { font-size: 40px; margin: 0 0 12px; }
-  h2 { font-size: 28px; margin: 0 0 12px; }
-  h3 { font-size: 20px; margin: 20px 0 8px; }
-  p { margin: 0 0 12px; }
-  section {
-    background: var(--card); border: 2px solid var(--line); border-radius: 18px;
-    padding: 24px; margin-bottom: 24px;
-  }
-  .step {
-    display: inline-block; background: var(--rust); color: #FBF3E6;
-    font-weight: 700; font-size: 14px; border-radius: 999px; padding: 2px 12px; margin-bottom: 8px;
-  }
-  pre {
-    background: var(--code-bg); color: var(--code-ink); border-radius: 12px;
-    padding: 16px 18px; overflow-x: auto; margin: 0 0 12px;
-    font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 16px; line-height: 1.6;
-  }
-  code { font-family: 'JetBrains Mono', 'Courier New', monospace; }
-  p code, li code, td code {
-    background: #F5E4CC; padding: 1px 6px; border-radius: 6px; font-size: 0.92em;
-  }
-  .k { color: #F2A65A; font-weight: 600; }
-  .s { color: #B9D98C; }
-  .n { color: #9CCFE0; }
-  .c { color: #C9A98A; }
-  table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; }
-  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
-  th { color: var(--rust); font-size: 15px; text-transform: uppercase; letter-spacing: 1px; }
-  .video {
-    position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px;
-    overflow: hidden; background: #000; margin-bottom: 12px;
-  }
-  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .flow { display: flex; justify-content: center; margin: 8px 0 12px; }
-  .flow svg { width: 100%; max-width: 520px; height: auto; }
-  .quiz { display: grid; gap: 12px; }
-  .q {
-    border: 2px solid var(--line); border-radius: 12px; padding: 12px 14px;
-    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
-  }
-  .q span { flex: 1 1 220px; }
-  button {
-    font: inherit; font-weight: 700; font-size: 16px; cursor: pointer;
-    background: var(--gold); color: var(--ink); border: 0; border-radius: 999px; padding: 6px 16px;
-  }
-  button:focus-visible { outline: 3px solid var(--rust); outline-offset: 2px; }
-  .ans { font-weight: 700; color: var(--green); }
-  .ans[hidden] { display: none; }
-  ul, ol { padding-left: 22px; margin: 0 0 12px; }
-  li { margin-bottom: 6px; }
-  .tip {
-    background: #F5E4CC; border-left: 6px solid var(--gold); border-radius: 8px;
-    padding: 10px 14px; margin: 12px 0;
-  }
-  footer { text-align: center; color: var(--soft); font-size: 15px; }
+:root{
+  --maroon:#7a1f2b; --maroon-d:#5a1520; --ink:#1f1d24; --muted:#5b5866; --bg:#fbf7f2; --card:#ffffff;
+  --line:#e7dfd6; --ok:#1f8a4c; --bad:#c0392b; --gold:#ffd166;
+  --code-bg:#262a44; --code-ink:#eef0fa; --code-dim:#a7acd4;
+  --tok-kw:#ffb088; --tok-fn:#ffd97a; --tok-str:#9ee6c2; --tok-num:#c3b4f5;
+  --l1:rgba(255,176,136,.16); --l2:rgba(143,217,182,.18); --l3:rgba(195,180,245,.24);
+  --mono:Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-size:19px;line-height:1.5}
+button{font:inherit;cursor:pointer}
+code{font-family:var(--mono);background:#efe7df;border-radius:6px;padding:0 6px;font-size:.92em}
+header{position:sticky;top:0;z-index:10;background:var(--maroon);color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1200px;margin:0 auto}
+.bar h1{font-size:18px;margin:0;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.timer{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border-radius:10px;padding:4px 8px}
+.timer span{font-variant-numeric:tabular-nums;font-weight:700;min-width:54px;text-align:center}
+.timer button,.iconbtn{background:#fff;color:var(--maroon);border:0;border-radius:8px;padding:4px 10px;font-weight:700;font-size:15px}
+.timer.done span{color:var(--gold)}
+nav.steps{display:flex;gap:6px;overflow-x:auto;padding:0 16px 10px;max-width:1200px;margin:0 auto;scrollbar-width:thin}
+nav.steps button{flex:0 0 auto;border:2px solid rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:999px;padding:5px 12px;font-size:15px;white-space:nowrap}
+nav.steps button.on{background:#fff;color:var(--maroon);border-color:#fff;font-weight:700}
+nav.steps button.seen:not(.on){border-color:var(--gold)}
+.progress{height:5px;background:rgba(255,255,255,.2)}
+.progress i{display:block;height:100%;background:var(--gold);width:0;transition:width .3s}
+main{max-width:1100px;margin:0 auto;padding:22px 16px 110px}
+section{display:none;animation:fade .25s}
+section.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+h2{font-size:32px;margin:0 0 4px;color:var(--maroon)}
+.sub{color:var(--muted);margin:0 0 18px}
+.mins{display:inline-block;background:#f3e6e8;color:var(--maroon);border-radius:999px;padding:2px 12px;font-size:15px;font-weight:700;margin-bottom:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:0 1px 0 rgba(0,0,0,.03);min-width:0}
+.card h3{margin:0 0 6px;font-size:21px}
+.card p{margin:6px 0}
+.big{font-size:22px}
+.btn{background:var(--maroon);color:#fff;border:0;border-radius:12px;padding:10px 18px;font-weight:700}
+.btn.alt{background:#fff;color:var(--maroon);border:2px solid var(--maroon)}
+.btn.sm{padding:5px 12px;font-size:16px;border-radius:10px}
+.btn:disabled{opacity:.4;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.two{display:grid;gap:16px;grid-template-columns:1.25fr 1fr}
+.two > *{min-width:0}
+.two.even{grid-template-columns:1fr 1fr}.two.pzgrid{grid-template-columns:.85fr 1.15fr}
+@media (max-width:820px){.two,.two.even,.two.pzgrid{grid-template-columns:1fr}h2{font-size:26px}}
+@media (max-width:600px){.bar{flex-wrap:wrap}.bar h1{flex-basis:100%;font-size:15px}#fs{display:none}html,body{font-size:17px}}
+.do{background:#fff7e0;border:2px dashed #e8c35a;border-radius:14px;padding:10px 14px;margin:0 0 14px}
+.do b.h{display:block;color:#7a5a00}
+.do ol{margin:4px 0 0;padding-left:22px}
+.badge{display:inline-block;border-radius:6px;padding:1px 8px;font-size:14px;font-weight:700;color:#fff;margin-right:4px}
+kbd{background:#fff;border:1px solid #ccc;border-bottom-width:3px;border-radius:6px;padding:0 6px;font-size:15px}
+.foot{position:fixed;bottom:0;left:0;right:0;background:rgba(251,247,242,.96);border-top:1px solid var(--line);z-index:9}
+.foot .in2{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.foot .where{color:var(--muted);font-size:15px;text-align:center;flex:1}
+.map{display:grid;gap:8px}
+.map button{display:flex;justify-content:space-between;align-items:center;text-align:left;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.map button:hover{border-color:var(--maroon)}
+.map b{color:var(--maroon);white-space:nowrap;margin-left:10px}
+.reveal{display:none;margin-top:8px;background:#fff7e0;border-radius:10px;padding:8px 12px;font-weight:700}
+.reveal.show{display:block}
 
-  /* Thonny-style editor */
-  .open-btn { margin: -2px 0 14px; background: #DCEBD0; color: #23502B; }
-  .thonny {
-    border: 1px solid #B8B8B8; border-radius: 10px; overflow: hidden;
-    background: #ECECEC; color: #1E1E1E; font-family: Arial, sans-serif; font-size: 15px;
-  }
-  .t-title {
-    background: #DADADA; border-bottom: 1px solid #C4C4C4; padding: 6px 12px;
-    font-size: 13px; color: #444; display: flex; align-items: center; gap: 8px;
-  }
-  .t-dots span { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 4px; }
-  .t-bar { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 10px; border-bottom: 1px solid #C4C4C4; align-items: center; }
-  .t-btn {
-    display: inline-flex; align-items: center; gap: 6px; background: #FAFAFA; color: #1E1E1E;
-    border: 1px solid #BDBDBD; border-radius: 6px; padding: 5px 12px; font-size: 14px; font-weight: 700;
-  }
-  .t-btn:disabled { opacity: 0.5; cursor: default; }
-  .t-run svg { fill: #3DA33D; }
-  .t-stop svg { fill: #D23C3C; }
-  .t-status { margin-left: auto; font-size: 13px; color: #555; }
-  .t-tab {
-    display: inline-block; background: #FFFFFF; border: 1px solid #C4C4C4; border-bottom: 0;
-    border-radius: 6px 6px 0 0; padding: 3px 12px; font-size: 13px; margin: 8px 0 0 10px;
-  }
-  .t-pane { background: #FFFFFF; border-top: 1px solid #C4C4C4; }
-  .t-edit { display: flex; height: 260px; }
-  .t-gutter {
-    background: #F3F3F3; color: #9A9A9A; text-align: right; padding: 10px 8px 10px 6px;
-    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 15px; line-height: 1.5;
-    min-width: 38px; overflow: hidden; white-space: pre; user-select: none; border-right: 1px solid #E2E2E2;
-  }
-  .t-code {
-    flex: 1; border: 0; outline: 0; resize: none; padding: 10px 12px; margin: 0;
-    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 15px; line-height: 1.5;
-    color: #1E1E1E; background: #FFFFFF; white-space: pre; overflow: auto; tab-size: 4;
-  }
-  .t-shell {
-    height: 190px; overflow-y: auto; padding: 8px 12px; white-space: pre-wrap; word-break: break-word;
-    font-family: 'JetBrains Mono', Consolas, 'Courier New', monospace; font-size: 15px; line-height: 1.5;
-  }
-  .t-shell .prompt { color: #4B7BBE; }
-  .t-shell .runcmd { color: #4B7BBE; }
-  .t-shell .err { color: #C62828; }
-  .t-shell .inp { color: #1E7D32; font-weight: 600; }
-  .t-in { display: flex; align-items: center; gap: 6px; border-top: 1px solid #E2E2E2; padding: 6px 12px; background: #FFFFFF; }
-  .t-in label { font-family: 'JetBrains Mono', Consolas, monospace; color: #4B7BBE; font-size: 15px; white-space: nowrap; }
-  .t-in input {
-    flex: 1; min-width: 0; border: 1px solid #CFCFCF; border-radius: 4px; padding: 5px 8px;
-    font-family: 'JetBrains Mono', Consolas, monospace; font-size: 15px;
-  }
-  .t-in input.waiting { border-color: #3DA33D; box-shadow: 0 0 0 3px #DCEBD0; }
-  .t-help { font-size: 15px; color: var(--soft); margin-top: 10px; }
-  a { color: var(--rust); }
-  @media (max-width: 480px) {
-    h1 { font-size: 32px; }
-    section { padding: 18px; }
-    pre { font-size: 14px; }
-    table { font-size: 15px; }
-    th, td { padding: 6px 5px; }
-    th { font-size: 12px; letter-spacing: 0; }
-  }
+/* code */
+pre.code{margin:0;background:var(--code-bg);color:var(--code-ink);border-radius:14px;padding:12px 0;overflow-x:auto;font-family:var(--mono);font-size:16px;line-height:1.6}
+pre.code .ln{display:block;padding:0 16px 0 0;white-space:pre;min-height:1.6em;width:max-content;min-width:100%;position:relative}
+pre.code .ln::before{content:attr(data-n);display:inline-block;width:38px;padding-right:12px;text-align:right;color:#6e74a3;user-select:none}
+.t-kw{color:var(--tok-kw);font-weight:700}.t-fn{color:var(--tok-fn)}.t-str{color:var(--tok-str)}.t-num{color:var(--tok-num)}.t-com{color:var(--code-dim);font-style:italic}
+pre.levels .ln{padding-right:46px}
+pre.levels .ln[data-l="1"]{background:var(--l1)}pre.levels .ln[data-l="2"]{background:var(--l2)}
+pre.levels .ln::after{content:attr(data-badge);position:absolute;right:12px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;color:#c9cdeb}
+pre.code .ln.new{background:rgba(255,217,122,.22);box-shadow:inset 4px 0 0 var(--gold);padding-right:52px}
+pre.code .ln.new::after{content:"NEW";position:absolute;right:12px;font-family:system-ui,sans-serif;font-size:11px;font-weight:700;color:var(--gold)}
+pre.code .ln.cur{background:rgba(255,209,102,.32);box-shadow:inset 4px 0 0 var(--gold)}
+pre.code .ln.yes{background:rgba(143,217,182,.30);box-shadow:inset 4px 0 0 #8fd9b6;padding-right:64px}
+pre.code .ln.no{background:rgba(255,157,133,.22);box-shadow:inset 4px 0 0 #ff9d85;padding-right:70px}
+pre.code .ln.ran{background:rgba(255,209,102,.32);box-shadow:inset 4px 0 0 var(--gold);padding-right:70px}
+pre.code .ln.dim{opacity:.38}
+pre.code .ln.yes::after,pre.code .ln.no::after,pre.code .ln.ran::after{position:absolute;right:12px;font-family:system-ui,sans-serif;font-size:12px;font-weight:700}
+pre.code .ln.yes::after{content:"TRUE";color:#8fd9b6}
+pre.code .ln.no::after{content:"FALSE";color:#ff9d85}
+pre.code .ln.ran::after{content:"RUNS";color:var(--gold)}
+pre.code .ln.skip::after{content:"SKIPPED";position:absolute;right:12px;font-family:system-ui,sans-serif;font-size:12px;font-weight:700;color:#8c92c4}
+pre.code .ln.skip{padding-right:80px}
+
+/* choices */
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(220px,100%),1fr));margin-top:12px}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:12px 14px;white-space:pre-line;color:var(--ink)}
+.opt.mono{font-family:var(--mono);font-size:16px}
+.opt.codeopt{font-family:var(--mono);font-size:15px;white-space:pre;overflow-x:auto;line-height:1.5}
+.opt:hover:not(:disabled){border-color:var(--maroon)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:#e9f7ef}
+.opt.wrong{border-color:var(--bad);background:#fdecea}
+.feedback{min-height:28px;margin-top:10px;font-weight:700}
+.fb{margin-top:12px;border-radius:12px;padding:10px 14px}
+.fb.ok{background:#e9f7ef;color:#155c34}.fb.no{background:#fdecea;color:#8e2a1f}
+.fb b{display:block}
+.monitors{display:flex;gap:10px;flex-wrap:wrap}
+.mon{display:inline-flex;align-items:center;gap:8px;background:#f2f2f2;border:1px solid #ccc;border-radius:6px;padding:4px 6px;font-weight:700;font-size:16px;font-family:var(--mono)}
+.mon b{background:#FF8C1A;color:#fff;border-radius:4px;padding:1px 10px;min-width:34px;text-align:center;transition:transform .2s}
+.mon b.pop{transform:scale(1.35)}
+
+/* hook */
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.sw{border:0;border-radius:14px;padding:14px 20px;font-weight:700;font-size:20px;color:#fff;min-width:110px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.sw:hover{transform:translateY(-2px)}
+.typeown{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.typeown input{font:inherit;font-family:var(--mono);border:2px solid var(--line);border-radius:10px;padding:8px 12px;min-width:0;flex:1;max-width:260px}
+.housecard{margin-top:14px;border-radius:16px;padding:16px 18px;color:#fff;display:none}
+.housecard.show{display:block;animation:fade .3s}
+.housecard h3{margin:0 0 4px;font-size:26px}
+.housecard p{margin:4px 0}
+
+/* flowchart */
+.flowwrap svg{width:100%;max-width:600px;height:auto;display:block;margin:0 auto}
+.fs{cursor:pointer}
+.fs:hover polygon,.fs:hover rect{stroke:var(--maroon);stroke-width:4}
+.fs.sel polygon,.fs.sel rect{fill:#ffd166 !important;stroke:var(--maroon);stroke-width:4}
+.fs:focus{outline:none}.fs:focus-visible polygon,.fs:focus-visible rect{stroke:var(--maroon);stroke-width:4}
+
+/* runner */
+.runner{margin-top:12px;background:#20233a;border-radius:14px;overflow:hidden}
+.runner-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;background:#1a1c30}
+.runner-bar .name{color:#c9cdeb;font-family:var(--mono);font-size:14px;font-weight:700;margin-right:auto}
+.rbtn{border:0;border-radius:999px;padding:6px 14px;font-size:15px;font-weight:700;background:#e4e6f6;color:var(--ink)}
+.rbtn.run{background:#8fd9b6}
+.rbtn:disabled{opacity:.6;cursor:wait}
+.editor{display:flex;background:var(--code-bg)}
+.gutter{flex:none;width:44px;padding:10px 10px 10px 0;text-align:right;color:#6e74a3;font-family:var(--mono);font-size:16px;line-height:1.6;user-select:none;overflow:hidden;white-space:pre}
+.editor textarea{flex:1;min-width:0;border:0;resize:vertical;background:transparent;color:var(--code-ink);font-family:var(--mono);font-size:16px;line-height:1.6;padding:10px 12px 10px 4px;outline:none;white-space:pre;overflow:auto;tab-size:4;caret-color:var(--gold)}
+.inputs-row{display:none;padding:8px 12px;background:#262a44;color:#c9cdeb;font-size:15px;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.inputs-row.show{display:flex}
+.inputs-row textarea{flex:1;min-width:140px;height:62px;border-radius:8px;border:0;padding:6px 10px;font-family:var(--mono);font-size:15px;background:#1a1c30;color:var(--code-ink)}
+.out-head{padding:5px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#8c92c4;background:#15172a;display:flex;justify-content:space-between}
+.out{margin:0;min-height:48px;max-height:280px;overflow:auto;padding:8px 12px 12px;background:#15172a;color:#e6e8f8;font-family:var(--mono);font-size:15px;line-height:1.55;white-space:pre-wrap}
+.out .in{color:var(--gold)}.out .err{color:#ff9d85}.out .note{color:#8c92c4;font-style:italic}.out .okn{color:#8fd9b6}
+
+/* parsons */
+.pz{display:flex;flex-direction:column;gap:6px}
+.pline{display:flex;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:10px;padding:4px 6px}
+.pline .ctl{display:flex;gap:4px;flex:none}
+.pline .ctl button{border:1px solid var(--line);background:#f7f2ec;border-radius:8px;width:34px;height:32px;font-weight:700;color:var(--maroon);padding:0}
+.pline code{flex:1;min-width:0;background:none;padding:0;font-size:14.5px;white-space:pre;overflow-x:auto}
+@media (max-width:600px){.pline code{font-size:13px}.pline .ctl button{width:30px}}
+.pline .lvl{flex:none;font-size:13px;font-weight:700;color:var(--muted);width:30px;text-align:center}
+.pline.good{border-color:var(--ok);background:#eef8f1}
+.pline.badp{border-color:var(--bad);background:#fdecea}
+
+/* player */
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.panel h4{margin:0 0 6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.say{min-height:52px}
+.vars{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.var{background:#f2f2f2;border-radius:10px;padding:6px 10px;transition:background .3s}
+.var .k{font-family:var(--mono);font-size:13px;color:var(--muted)}
+.var .v{font-family:var(--mono);font-size:20px;font-weight:700}
+.var.changed{background:var(--gold)}
+.pout{margin:0;min-height:80px;max-height:200px;overflow:auto;background:#15172a;color:#e6e8f8;border-radius:10px;padding:8px 10px;font-family:var(--mono);font-size:15px;white-space:pre-wrap}
+.pick{border:2px solid var(--maroon);background:#fff;color:var(--maroon);border-radius:999px;padding:4px 14px;font-weight:700;font-size:16px}
+.pick.on{background:var(--maroon);color:#fff}
+
+/* checklist */
+.check{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.check.done{background:#eef8f1;border-color:#bfe3cc}
+.check .top{display:flex;gap:12px;align-items:flex-start}
+.check input{width:26px;height:26px;margin-top:3px;accent-color:var(--ok);flex:0 0 auto}
+.check .t{font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:17px;background:#fff;border-radius:12px;overflow:hidden}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+.tbl th{background:#f3e6e8;color:var(--maroon)}
+.tbl td.m{font-family:var(--mono);font-size:15px}
+.tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{font-family:var(--mono);background:#f3e6e8;color:var(--maroon);border-radius:999px;padding:2px 12px;font-weight:700;font-size:16px}
+.chip i{font-style:normal;font-family:"Atkinson Hyperlegible",system-ui,sans-serif;font-weight:400;color:var(--ink);margin-left:6px}
+
+/* Show code exactly as typed: no font ligatures */
+code,pre,textarea,.mono,.opt,.mon,.var,.pline,.out,.pout,.gutter,.tbl td.m,.runner-bar .name,.chip,.typeown input{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0,"dlig" 0}
+.ver{background:rgba(255,255,255,.18);border-radius:999px;padding:3px 10px;font-size:13px;font-weight:700;white-space:nowrap}
+
+.kwrow{display:flex;flex-wrap:wrap;gap:8px;align-items:flex-start;margin:6px 0 16px}
+.kwlab{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:7px;margin-right:2px}
+.kw{background:#fff;border:2px solid #e3c9cd;border-radius:12px;padding:5px 12px;text-align:left;color:var(--ink);max-width:340px}
+.kw b{color:var(--maroon)}
+.kw span{display:none;font-size:15px;color:var(--ink);margin-top:2px}
+.kw[aria-expanded="true"]{background:#fff7e0;border-color:#e8c35a}
+.kw[aria-expanded="true"] span{display:block}
+
+.tnotes{display:none;background:#fffdf7;border:2px solid #e8c35a;border-radius:16px;padding:14px 16px;font-size:16px;line-height:1.5;align-self:start;position:sticky;top:122px;max-height:calc(100vh - 210px);overflow:auto}
+.tnotes .tn-head{font-weight:700;color:#7a5a00;text-transform:uppercase;letter-spacing:.06em;font-size:13px;margin-bottom:4px}
+.tnotes h4{margin:12px 0 4px;color:var(--maroon);font-size:16px}
+.tnotes p{margin:4px 0}.tnotes ul,.tnotes ol{margin:4px 0;padding-left:20px}
+body.notes main{max-width:1500px}
+body.notes section.on{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:20px}
+body.notes .tnotes{display:block}
+@media (max-width:1100px){body.notes section.on{display:block}body.notes .tnotes{position:static;max-height:none;margin-top:18px}}
+.iconbtn[aria-pressed="true"]{background:var(--gold);color:#3b2a00}
+
+/* student-friendly header and navigation */
+.brand{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}
+.brand b{font-size:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand span{font-size:13px;opacity:.85}
+.aura{display:flex;align-items:center;gap:8px;background:#fff;color:var(--maroon);border-radius:999px;padding:4px 14px 4px 6px;font-weight:700;white-space:nowrap}
+.aura .lv{background:var(--gold);color:#3b2a00;border-radius:999px;padding:2px 10px;font-size:14px}
+.aura b{font-size:20px;font-variant-numeric:tabular-nums}
+.aura.bump{animation:bump .5s}
+@keyframes bump{40%{transform:scale(1.12)}}
+nav.steps{gap:6px}
+nav.steps button{display:flex;align-items:center;gap:6px;padding:4px 12px 4px 4px}
+nav.steps .num{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.2);font-size:13px;font-weight:700}
+nav.steps button.on .num{background:var(--maroon);color:#fff}
+nav.steps button.done .num{background:var(--ok);color:#fff}
+nav.steps button.done .num::before{content:"✓"}
+nav.steps button.done .num span{display:none}
+.sub{max-width:70ch}
+.foot .btn{min-width:120px}
+#next{font-size:18px}
+.mission{background:#f0f8f3;border:2px solid #bfe3cc;border-radius:14px;padding:10px 14px;margin:6px 0 16px}
+.mission .mh{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#155c34;margin-bottom:4px}
+.mission ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.mission li{display:flex;align-items:center;gap:10px}
+.mission li .bx{flex:none;width:24px;height:24px;border-radius:7px;border:2px solid #8cc7a2;background:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:15px}
+.mission li.ok .bx{background:var(--ok);border-color:var(--ok)}
+.mission li.ok .bx::before{content:"✓"}
+.mission li.ok .mt{text-decoration:line-through;color:var(--muted)}
+.mission li .pts{margin-left:auto;font-size:14px;font-weight:700;color:#155c34;white-space:nowrap}
+.toast{position:fixed;left:50%;top:130px;transform:translateX(-50%) translateY(-10px);background:#155c34;color:#fff;border-radius:999px;padding:10px 20px;font-weight:700;z-index:30;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;box-shadow:0 6px 18px rgba(0,0,0,.2);max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.confetti{position:fixed;top:-12px;width:10px;height:14px;z-index:40;pointer-events:none;border-radius:2px;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(540deg);opacity:.6}}
+
+/* sorting hat */
+.hat{display:flex;flex-direction:column;gap:12px}
+.hat .step{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.hat .step > .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--maroon);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.hat input[type=text]{font:inherit;font-family:var(--mono);border:2px solid var(--line);border-radius:10px;padding:8px 12px;min-width:0;width:220px}
+.hat input[type=text]:focus{border-color:var(--maroon);outline:none}
+.thinking{display:none;align-items:center;gap:10px;font-weight:700;color:var(--maroon)}
+.thinking.show{display:flex}
+.thinking .dots i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--maroon);margin:0 2px;animation:dot 1s infinite}
+.thinking .dots i:nth-child(2){animation-delay:.15s}.thinking .dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{50%{transform:translateY(-6px)}}
+.housecard{display:none;align-items:center;gap:16px;border-radius:18px;padding:14px 18px;color:#fff;margin-top:4px}
+.housecard.show{display:flex;animation:popin .45s}
+@keyframes popin{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.housecard svg{flex:none;width:96px;height:94px}
+.housecard h3{margin:0 0 4px;font-size:24px;line-height:1.2}
+.housecard p{margin:0}
+.shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+.slot{border:2px dashed var(--line);border-radius:14px;padding:6px;text-align:center;font-size:14px;font-weight:700;color:var(--muted);background:#faf6f1}
+.slot svg{width:54px;height:53px;display:block;margin:0 auto;filter:grayscale(1);opacity:.25}
+.slot.got{border-style:solid;color:var(--ink);background:#fff}
+.slot.got svg{filter:none;opacity:1}
+.shellout{margin-top:10px;background:#15172a;color:#e6e8f8;border-radius:10px;padding:8px 12px;font-family:var(--mono);font-size:15px;min-height:40px;white-space:pre-wrap}
+.shellout .in{color:var(--gold)}
+.result{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#fff7e0,#f0f8f3);border:2px solid #e8c35a;border-radius:18px;padding:16px 18px;margin-top:14px}
+.result .big2{font-size:34px;font-weight:700;color:var(--maroon);line-height:1.1}
+@media (max-width:600px){.brand span{display:none}.bar{flex-wrap:nowrap}.typeown label{flex-basis:100%}.typeown input{max-width:none}.hat input[type=text]{width:100%}.aura{padding:3px 10px 3px 4px}.aura b{font-size:17px}.brand b{font-size:16px}.housecard svg{width:72px;height:70px}.shelf{grid-template-columns:repeat(2,1fr)}nav.steps .lab{display:none}nav.steps button{padding:4px}nav.steps button.on .lab{display:inline;padding-right:8px}}
+.haunt{position:relative;overflow:hidden;background:linear-gradient(160deg,#1e1530,#3a2350 60%,#4a2340);color:#f3eefc;border-radius:18px;padding:18px 18px 20px}
+.haunt h3{margin:0 0 4px;font-size:24px;color:#ffb347}
+.haunt p{margin:4px 0;max-width:62ch}
+.haunt code{background:rgba(255,255,255,.14);color:#fff}
+.bat{position:absolute;font-size:26px;animation:flap 3.2s ease-in-out infinite;pointer-events:none}
+.bat.b2{animation-delay:.8s;font-size:20px}.bat.b3{animation-delay:1.6s;font-size:16px}
+@keyframes flap{50%{transform:translate(-14px,10px) rotate(-8deg)}}
+.ghostbar{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 4px}
+.gh{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:64px;background:rgba(255,255,255,.08);border-radius:12px;padding:6px 8px;font-size:13px;font-weight:700;color:#cdbfe6}
+.gh span{font-size:30px;line-height:1}
+.gh.caught{background:rgba(242,140,40,.22);color:#ffd9a8}
+.gh.caught span{animation:poof .6s}
+@keyframes poof{0%{transform:scale(1.6) rotate(-20deg);opacity:.2}100%{transform:scale(1)}}
+.hstep{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;margin-top:10px}
+.hstep.now{border-color:#ffb347;box-shadow:0 0 0 3px rgba(255,179,71,.22)}
+.hstep.done{background:rgba(143,217,182,.10);border-color:#8fd9b6}
+.hstep .ic{flex:none;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px}
+.hstep.done .ic{background:#1f8a4c}
+.hstep .t{font-weight:700;font-size:20px}
+.hstep .bd{flex:1;min-width:0}
+.hstep .guide{margin:4px 0 0;color:#e2d8f3}
+.hstep .tick{display:inline-flex;align-items:center;gap:8px;margin-top:8px;font-weight:700;cursor:pointer}
+.hstep .tick input{width:24px;height:24px;accent-color:#8fd9b6}
+.hrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.hrow input[type=text]{font:inherit;font-family:var(--mono);background:#15102a;color:#fff;border:2px solid rgba(255,255,255,.25);border-radius:10px;padding:7px 12px;min-width:0;flex:1;max-width:300px}
+.hrow input[type=text]:focus{outline:none;border-color:#ffb347}
+.hbtn{border:0;border-radius:10px;padding:8px 16px;font-weight:700;background:#f28c28;color:#2a1600}
+.hbtn.ghost{background:transparent;color:#ffd9a8;border:2px solid rgba(255,217,168,.5)}
+.hfb{margin-top:8px;font-weight:700}
+.hfb.ok{color:#8fd9b6}.hfb.no{color:#ffb3a1}
+.hfb small{display:block;font-weight:400;color:#e2d8f3;font-size:16px;margin-top:2px}
+.exp{display:inline-block;background:rgba(255,255,255,.12);border-radius:8px;padding:0 8px;font-family:var(--mono)}
+.hsafe{display:none;margin-top:14px;background:linear-gradient(135deg,#f28c28,#d2502f);color:#fff;border-radius:16px;padding:14px 18px;font-size:20px;font-weight:700}
+.hsafe.show{display:block;animation:popin .45s}
+.hrun{margin-top:14px;background:rgba(0,0,0,.2);border-radius:12px;padding:8px 12px}
+.hrun summary{cursor:pointer;font-weight:700;color:#ffd9a8}
+.tstep{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-bottom:14px;min-width:0}
+.tstep > h3{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:22px}
+.sn{flex:none;width:34px;height:34px;border-radius:50%;background:#f28c28;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.howto{background:#fff4e6;border-left:6px solid #f28c28;border-radius:10px;padding:10px 14px;margin-bottom:12px}
+.howto ol{margin:4px 0 0;padding-left:22px}
+.pumps{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:4px 0 10px;font-weight:700}
+.pumps .p{font-size:30px;line-height:1;filter:grayscale(1);opacity:.3;transition:all .3s}
+.pumps .p.lit{filter:none;opacity:1;transform:scale(1.1)}
+.pumps .lbl{margin-left:8px}
+.thead,.trow{display:grid;grid-template-columns:36px 1fr 1.25fr 1.15fr 190px;gap:12px;align-items:center}
+.thead{padding:0 12px;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.trow{border:2px solid var(--line);border-radius:12px;padding:6px 12px;margin-top:6px;background:#fff}
+.trow .n{width:30px;height:30px;border-radius:50%;background:#f3e6e8;color:var(--maroon);display:inline-flex;align-items:center;justify-content:center;font-weight:700}
+.trow .inp{font-family:var(--mono);font-weight:700;font-size:18px}
+.trow .exp2{font-family:var(--mono)}
+.trow .yn{display:flex;gap:6px}
+.trow .yn button{flex:1;border-radius:10px;padding:7px 10px;font-weight:700;border:2px solid var(--line);background:#fff;color:var(--ink)}
+.trow .yn .y:hover{border-color:var(--ok)}.trow .yn .no:hover{border-color:var(--bad)}
+.trow.yes{border-color:var(--ok);background:#eef8f1}
+.trow.yes .n{background:var(--ok);color:#fff}
+.trow.yes .yn .y{background:var(--ok);border-color:var(--ok);color:#fff}
+.trow.bad{border-color:#e9a99b;background:#fff6f3}
+.trow.bad .yn .no{background:var(--bad);border-color:var(--bad);color:#fff}
+.trow .hint{grid-column:1/-1;background:#fff;border-radius:10px;border:1px dashed #e9a99b;padding:8px 12px;font-size:17px}
+.trow .cl{display:none;font-size:13px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-right:6px}
+.tdone{display:none;margin-top:12px;background:linear-gradient(135deg,#f28c28,#d2502f);color:#fff;border-radius:14px;padding:12px 16px;font-weight:700;font-size:19px}
+.tdone.show{display:block;animation:popin .45s}
+.tbackup{margin:16px 0 0;font-size:17px;color:var(--muted)}
+.tick2{display:inline-flex;align-items:center;gap:10px;margin-top:10px;font-weight:700;cursor:pointer}
+.tick2 input{width:24px;height:24px;accent-color:var(--ok)}
+@media (max-width:760px){.thead{display:none}.trow{grid-template-columns:36px 1fr;row-gap:4px}.trow .n{grid-row:span 3}.trow > div:not(.yn):not(.hint){grid-column:2}.trow .cl{display:inline}.trow .yn{grid-column:1/-1}}
+.stepper{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 16px}
+.stepper button{display:flex;align-items:center;gap:8px;border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 14px 5px 5px;font-weight:700;color:var(--muted)}
+.stepper button .c{width:28px;height:28px;border-radius:50%;background:#efe7df;color:var(--ink);display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+.stepper button.on{border-color:var(--maroon);color:var(--maroon)}
+.stepper button.on .c{background:var(--maroon);color:#fff}
+.stepper button.ok .c{background:var(--ok);color:#fff}
+.bgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:start}
+.bgrid > *{min-width:0}
+@media (max-width:820px){.bgrid{grid-template-columns:1fr}}
+.blab{font-size:14px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.bdo{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.bdo h3{margin:0 0 8px;font-size:22px}
+.bsteps{margin:0 0 14px;padding-left:24px;font-size:20px}
+.bsteps li{margin-bottom:8px}
+.bsteps .small{display:block;font-size:16px;color:var(--muted)}
+.exp{font-family:var(--mono);background:#fff4e6;border-radius:6px;padding:0 6px;font-weight:700}
+.bhint{margin-top:12px;background:#fff6f3;border:1px dashed #e9a99b;border-radius:10px;padding:8px 12px;font-size:17px}
+.bdone{margin-top:12px;background:#eef8f1;border:2px solid #bfe3cc;border-radius:12px;padding:10px 14px;font-weight:700;color:#155c34}
+.swapnote{display:inline-block;background:var(--maroon);color:#fff;border-radius:8px;padding:3px 10px;font-weight:700;font-size:15px;margin-bottom:10px}
+.mini{margin-top:12px;background:#15172a;border-radius:12px;overflow:hidden}
+.mini .mbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:8px 10px;background:#1a1c30;color:#c9cdeb;font-size:15px}
+.mini .mbar input{font:inherit;font-family:var(--mono);width:130px;border:0;border-radius:8px;padding:4px 8px;background:#262a44;color:#fff}
+.mini .mbar .rbtn{margin-left:auto}
+.mini .out{max-height:180px}
+.inst{font-size:20px;margin:6px 0 16px;max-width:75ch}
+.pane{display:none}.pane.on{display:block;animation:fade .25s}
+.pnext{margin-top:18px;display:flex;justify-content:flex-end}
+.remember{margin-top:14px;background:#fff7e0;border:2px dashed #e8c35a;border-radius:14px;padding:10px 14px;font-size:17px}
+.linkbtn{background:none;border:0;padding:0;color:var(--maroon);text-decoration:underline;font-weight:700}
+.nothonny{margin-top:12px;color:var(--muted)}.nothonny summary{cursor:pointer;font-weight:700}
+.mgrid{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:820px){.mgrid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 </head>
 <body>
-<main>
-
 <header>
-  <p class="kicker">Year 7 Digital Technologies · Python IV</p>
-  <h1>Python: if, elif, else</h1>
-  <p>Programs make decisions. They check a condition. If it is <b>True</b>, they do one thing. If it is <b>False</b>, they do something else.</p>
+  <div class="bar">
+    <div class="brand"><b>Python: if, elif, else</b><span>Year 7 Digital Technologies · Python IV · Student copy</span></div>
+    <div class="aura" id="aura" title="Your aura points. Finish missions to level up."><span class="lv" id="auraLvl">🥚 Egg</span><b id="auraPts">0</b> aura</div>
+    
+  </div>
+  <nav class="steps" id="steps" aria-label="Lesson parts"></nav>
+  <div class="progress"><i id="prog"></i></div>
 </header>
 
-<section>
-  <span class="step">1</span>
-  <h2>Watch the video</h2>
-  <div class="video">
-    <iframe src="https://www.youtube-nocookie.com/embed/FvMPfrgGeKs" title="If statements in Python are easy (if, elif, else) by Bro Code" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  </div>
-  <p>Video not loading? <a href="https://www.youtube.com/watch?v=FvMPfrgGeKs" target="_blank" rel="noopener">Open it on YouTube</a>.</p>
-</section>
+<main>
 
-<section>
-  <span class="step">2</span>
-  <h2>Comparison operators</h2>
-  <p>A condition compares two values. The answer is always <code>True</code> or <code>False</code>.</p>
-  <table>
-    <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Answer</th></tr>
-    <tr><td><code>==</code></td><td>equal to</td><td><code>5 == 5</code></td><td>True</td></tr>
-    <tr><td><code>!=</code></td><td>not equal to</td><td><code>5 != 3</code></td><td>True</td></tr>
-    <tr><td><code>&gt;</code></td><td>greater than</td><td><code>7 &gt; 10</code></td><td>False</td></tr>
-    <tr><td><code>&lt;</code></td><td>less than</td><td><code>2 &lt; 9</code></td><td>True</td></tr>
-    <tr><td><code>&gt;=</code></td><td>greater than or equal to</td><td><code>3 &gt;= 3</code></td><td>True</td></tr>
-    <tr><td><code>&lt;=</code></td><td>less than or equal to</td><td><code>4 &lt;= 1</code></td><td>False</td></tr>
-  </table>
-  <div class="tip"><b>Remember:</b> <code>=</code> stores a value. <code>==</code> compares two values.</div>
-</section>
-
-<section>
-  <span class="step">3</span>
-  <h2>How if, elif and else work</h2>
-  <pre id="code-score">score = <span class="k">int</span>(<span class="k">input</span>(<span class="s">"Score out of 100: "</span>))
-<span class="k">if</span> score &gt;= <span class="n">80</span>:
-    <span class="k">print</span>(<span class="s">"Excellent"</span>)
-<span class="k">elif</span> score &gt;= <span class="n">50</span>:
-    <span class="k">print</span>(<span class="s">"Pass"</span>)
-<span class="k">else</span>:
-    <span class="k">print</span>(<span class="s">"Try again"</span>)</pre>
-  <button type="button" class="open-btn" data-load="code-score">Open in the Python editor</button>
-  <ul>
-    <li><code>if</code> checks the first condition.</li>
-    <li><code>elif</code> means "else if". It checks the next condition only if the one before was False.</li>
-    <li><code>else</code> runs when every condition above was False. It has no condition.</li>
-    <li>Python runs <b>only one</b> branch: the first one that is True.</li>
-  </ul>
-  <h3>The same program as a flowchart</h3>
-  <p>Each diamond is one condition. Each diamond has a True path and a False path.</p>
-  <div class="flow">
-    <svg viewBox="0 0 520 420" role="img" aria-label="Flowchart: input score. Diamond: score at least 80? True goes to print Excellent. False goes to diamond: score at least 50? True goes to print Pass. False goes to print Try again.">
-      <defs>
-        <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-          <path d="M0 0 L10 5 L0 10Z" fill="#3B2418"/>
-        </marker>
-      </defs>
-      <g font-family="Nunito Sans, Arial, sans-serif" font-size="16" fill="#3B2418">
-        <rect x="140" y="10" width="160" height="44" rx="22" fill="#F5E4CC" stroke="#3B2418" stroke-width="2"/>
-        <text x="220" y="38" text-anchor="middle">Input score</text>
-        <line x1="220" y1="54" x2="220" y2="86" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
-        <polygon points="220,88 310,140 220,192 130,140" fill="#E8A93A" stroke="#3B2418" stroke-width="2"/>
-        <text x="220" y="145" text-anchor="middle">score &gt;= 80?</text>
-        <line x1="310" y1="140" x2="368" y2="140" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
-        <text x="338" y="130" text-anchor="middle" font-weight="700">True</text>
-        <rect x="370" y="118" width="140" height="44" rx="8" fill="#FFFDF8" stroke="#3B2418" stroke-width="2"/>
-        <text x="440" y="145" text-anchor="middle">Excellent</text>
-        <line x1="220" y1="192" x2="220" y2="224" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
-        <text x="236" y="214" font-weight="700">False</text>
-        <polygon points="220,226 310,278 220,330 130,278" fill="#E8A93A" stroke="#3B2418" stroke-width="2"/>
-        <text x="220" y="283" text-anchor="middle">score &gt;= 50?</text>
-        <line x1="310" y1="278" x2="368" y2="278" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
-        <text x="338" y="268" text-anchor="middle" font-weight="700">True</text>
-        <rect x="370" y="256" width="140" height="44" rx="8" fill="#FFFDF8" stroke="#3B2418" stroke-width="2"/>
-        <text x="440" y="283" text-anchor="middle">Pass</text>
-        <line x1="220" y1="330" x2="220" y2="362" stroke="#3B2418" stroke-width="2" marker-end="url(#ah)"/>
-        <text x="236" y="352" font-weight="700">False</text>
-        <rect x="150" y="364" width="140" height="44" rx="8" fill="#FFFDF8" stroke="#3B2418" stroke-width="2"/>
-        <text x="220" y="391" text-anchor="middle">Try again</text>
-      </g>
-    </svg>
+<!-- 0 START -->
+<section data-title="Start" data-short="Start" data-min="1">
+  <h2>Today: make Python choose</h2>
+  <p class="inst">Today you build a <b>sorting hat</b> and your own <b>bot</b> using <code>if</code>, <code>elif</code> and <code>else</code>.</p>
+  <div class="two">
+    <div class="map" id="map"></div>
+    <div class="card">
+      <h3>How it works</h3>
+      <p>👥 Work in pairs. The <b>Driver</b> types. The <b>Navigator</b> checks.</p>
+      <p>➡️ Click <b>Next</b> at the bottom to move on.</p>
+      <p>🐸 Earn <b>aura</b> as you go: 🥚 Egg → 🐣 Tadpole → 🐸 Frog → 👑 Frog King.</p>
+      <button class="btn alt sm" id="resetAll" style="margin-top:8px">Start fresh</button>
+    </div>
   </div>
 </section>
 
-<section id="editor">
-  <span class="step">4</span>
-  <h2>Python editor</h2>
-  <p>Type your code at the top, then press <b>Run</b>. The answers appear in the <b>Shell</b>. When your program asks a question, type your answer in the box at the bottom and press Enter.</p>
-  <div class="thonny">
-    <div class="t-title"><span class="t-dots"><span style="background:#FF5F57"></span><span style="background:#FEBC2E"></span><span style="background:#28C840"></span></span>Python editor</div>
-    <div class="t-bar">
-      <button type="button" class="t-btn t-run" id="runBtn" aria-label="Run program"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1 L13 7 L2 13Z"/></svg>Run</button>
-      <button type="button" class="t-btn t-stop" id="stopBtn" aria-label="Stop program" disabled><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="1" width="10" height="10" rx="1"/></svg>Stop</button>
-      <button type="button" class="t-btn" id="clearBtn">Clear Shell</button>
-      <span class="t-status" id="pyStatus">Python starts when you press Run</span>
-    </div>
-    <span class="t-tab">editor.py</span>
-    <div class="t-pane t-edit">
-      <div class="t-gutter" id="gutter" aria-hidden="true">1</div>
-      <textarea class="t-code" id="code" spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Python code">name = input("What is your name? ")
-print(f"Hello, {name}!")</textarea>
-    </div>
-    <span class="t-tab">Shell</span>
-    <div class="t-pane">
-      <div class="t-shell" id="shell" aria-live="polite"></div>
-      <div class="t-in">
-        <label for="shellIn" id="shellLabel">&gt;&gt;&gt;</label>
-        <input id="shellIn" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="Type here and press Enter">
+<!-- 1 WARM-UP -->
+<section data-title="1. Warm-up: the sorting hat" data-short="Warm-up" data-min="5" data-m="hook">
+  <h2>Warm-up: the sorting hat</h2>
+  <p class="inst">Type your name, pick a colour, and let the hat sort you. Collect all 4 houses!</p>
+  <div class="two even">
+    <div class="card hat">
+      <div class="step"><span class="n">1</span><label for="hatName">Your name:</label><input id="hatName" type="text" autocomplete="off" spellcheck="false" maxlength="20" placeholder="your name"></div>
+      <div class="step"><span class="n">2</span><span>Pick a colour:</span></div>
+      <div class="swatches">
+        <button class="sw" style="background:#c0392b" data-col="red">red</button>
+        <button class="sw" style="background:#2c6fbb" data-col="blue">blue</button>
+        <button class="sw" style="background:#2e8b57" data-col="green">green</button>
+        <button class="sw" style="background:#7d4fb3" data-col="purple">purple</button>
       </div>
+      <div class="typeown"><label for="ownCol">or type one:</label><input id="ownCol" type="text" autocomplete="off" spellcheck="false" maxlength="20" placeholder="any colour"><button class="btn sm" id="ownGo">Sort me</button></div>
+      <div class="thinking" id="thinking">The hat is thinking <span class="dots"><i></i><i></i><i></i></span></div>
+      <div class="housecard" id="house"></div>
+      <p style="margin:6px 0 2px;font-weight:700">Your houses <span style="font-weight:400;color:var(--muted)">· Secret: can you trick the hat?</span></p>
+      <div class="shelf" id="shelf"></div>
+    </div>
+    <div class="card">
+      <h3>How did the hat know?</h3>
+      <div id="hookCode"></div>
+      <div class="shellout" id="hookOut" aria-live="polite"></div>
+      <div class="feedback" id="hookSay" style="font-weight:400"></div>
     </div>
   </div>
-  <p class="t-help">Tip: after a run, you can type a variable name in the Shell, like <code>score</code>, to see what it holds. If the page freezes, your loop never stopped: reload the page.</p>
 </section>
 
-<section>
-  <span class="step">5</span>
-  <h2>Predict the output</h2>
-  <p>Use the score program above. Predict first, then click to check. Then run it in the Python editor to test.</p>
-  <div class="quiz">
-    <div class="q"><span>The user types <code>95</code></span><button type="button" data-a="a1">Check</button><span class="ans" id="a1" hidden>Excellent</span></div>
-    <div class="q"><span>The user types <code>80</code></span><button type="button" data-a="a2">Check</button><span class="ans" id="a2" hidden>Excellent (80 &gt;= 80 is True)</span></div>
-    <div class="q"><span>The user types <code>79</code></span><button type="button" data-a="a3">Check</button><span class="ans" id="a3" hidden>Pass</span></div>
-    <div class="q"><span>The user types <code>50</code></span><button type="button" data-a="a4">Check</button><span class="ans" id="a4" hidden>Pass</span></div>
-    <div class="q"><span>The user types <code>49</code></span><button type="button" data-a="a5">Check</button><span class="ans" id="a5" hidden>Try again</span></div>
-    <div class="q"><span>The user types <code>95</code>. Why does it not print "Pass" too?</span><button type="button" data-a="a6">Check</button><span class="ans" id="a6" hidden>Python stops at the first True branch.</span></div>
+<!-- 2 REVIEW -->
+<section data-title="2. Review: conditions" data-short="Review" data-min="7" data-m="review">
+  <h2>Review: if, elif and else</h2>
+  <p class="inst">8 questions, 3 lives. Get 3 right in a row for a bonus.</p>
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <div class="monitors"><span class="mon">score <b id="qScore">0</b></span><span class="mon">lives <b id="qLives">3</b></span><span class="mon">streak <b id="qStreak">0</b></span></div>
+      <span id="qNum" style="color:var(--muted)">Question 1 of 8</span>
+    </div>
+    <p class="big" id="qText" style="margin:14px 0 4px"></p>
+    <div id="qCode"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="feedback" id="qFb"></div>
+    <div class="row" style="margin-top:10px"><button class="btn" id="qNext" disabled>Next question</button><button class="btn alt" id="qAgain">Start again</button></div>
+  </div>
+  <div class="remember"><b>Remember:</b> <code>==</code> compares, <code>=</code> stores · Python runs <b>only the first True branch</b> · <code>else</code> has no condition · every <code>if</code>, <code>elif</code>, <code>else</code> ends with a colon</div>
+</section>
+
+<!-- 3 FLOWCHART + TRACE -->
+<section data-title="3. Flowchart and trace" data-short="Flowchart" data-min="12" data-m="flow">
+  <h2>Flowchart, code and trace</h2>
+  <div class="stepper" data-stepper="flow"></div>
+  <div class="pane" data-name="Diamonds" data-ok="fdia">
+    <p class="inst">Each <b>diamond</b> is one <code>if</code> or <code>elif</code>. Click each shape to find its line.</p>
+    <div class="two even">
+      <div class="card"><div class="flowwrap" id="flowMain"></div></div>
+      <div class="card"><div id="flowCode"></div><div class="panel" style="margin-top:12px"><h4>This shape</h4><div id="flowSay" class="say">Click a shape in the flowchart.</div></div></div>
+    </div>
+  </div>
+  <div class="pane" data-name="Match 1" data-ok="m1">
+    <p class="inst">Which code matches this flowchart? Click A, B or C.</p>
+    <div class="mgrid"><div class="card"><div class="flowwrap" id="flowM1"></div></div><div id="match1"></div></div>
+  </div>
+  <div class="pane" data-name="Match 2" data-ok="m2">
+    <p class="inst">Which code matches? Test each one in your head with <span class="exp">35</span>.</p>
+    <div class="mgrid"><div class="card"><div class="flowwrap" id="flowM2"></div></div><div id="match2"></div></div>
+  </div>
+  <div class="pane" data-name="Trace" data-ok="t85,t60,t30">
+    <p class="inst">Pick what the player types. Click <b>Next step</b> and guess each line before it runs. Try all 3.</p>
+    <div class="row" style="margin-bottom:12px"><span style="font-weight:700">The player types:</span><button class="pick on" data-run="85">85</button><button class="pick" data-run="60">60</button><button class="pick" data-run="30">30</button></div>
+    <div class="two" id="player"></div>
   </div>
 </section>
 
-<section>
-  <span class="step">6</span>
-  <h2>Build it in Thonny: the sorting hat</h2>
-  <p>Write the pseudocode first. Then type the code and test every colour.</p>
-  <pre id="code-hat"><span class="c"># Sorting hat</span>
-colour = <span class="k">input</span>(<span class="s">"Favourite colour? "</span>)
-<span class="k">if</span> colour == <span class="s">"red"</span>:
-    <span class="k">print</span>(<span class="s">"Fire House"</span>)
-<span class="k">elif</span> colour == <span class="s">"blue"</span>:
-    <span class="k">print</span>(<span class="s">"Water House"</span>)
-<span class="k">elif</span> colour == <span class="s">"green"</span>:
-    <span class="k">print</span>(<span class="s">"Forest House"</span>)
-<span class="k">else</span>:
-    <span class="k">print</span>(<span class="s">"Sky House"</span>)</pre>
-  <button type="button" class="open-btn" data-load="code-hat">Open in the Python editor</button>
-  <h3>Test it</h3>
-  <table>
-    <tr><th>Type this</th><th>Expected output</th></tr>
-    <tr><td><code>red</code></td><td>Fire House</td></tr>
-    <tr><td><code>blue</code></td><td>Water House</td></tr>
-    <tr><td><code>green</code></td><td>Forest House</td></tr>
-    <tr><td><code>purple</code></td><td>Sky House</td></tr>
-    <tr><td><code>Red</code></td><td>Sky House (capital R is not the same as small r)</td></tr>
-  </table>
-  <h3>Your turn</h3>
-  <ol>
-    <li>Add one more <code>elif</code> for a new colour and a new house.</li>
-    <li>Change the questions so it recommends a snack, a game or a song instead.</li>
-  </ol>
+<!-- 4 PUZZLE -->
+<section data-title="4. Pseudocode to code" data-short="Puzzle" data-min="6" data-m="pz">
+  <h2>Puzzle: pseudocode to code</h2>
+  <p class="inst">Put the lines in order with <b>↑ ↓</b>. Add spaces with <b>← →</b>. Then click <b>Check</b>.</p>
+  <div class="two pzgrid">
+    <div class="card">
+      <h3>The plan</h3>
+      <div class="tblwrap"><table class="tbl" style="font-size:17px">
+        <tr><th>Spaces</th><th>Step</th></tr>
+        <tr><td>0</td><td><b>ASK</b> for a colour</td></tr>
+        <tr><td>0</td><td><b>IF</b> colour is red</td></tr>
+        <tr><td>4</td><td>&nbsp;&nbsp;print Fire House</td></tr>
+        <tr><td>0</td><td><b>ELSE IF</b> colour is blue</td></tr>
+        <tr><td>4</td><td>&nbsp;&nbsp;print Water House</td></tr>
+        <tr><td>0</td><td><b>ELSE</b></td></tr>
+        <tr><td>4</td><td>&nbsp;&nbsp;print Sky House</td></tr>
+      </table></div>
+    </div>
+    <div class="card">
+      <h3>Your code</h3>
+      <div class="pz" id="pz"></div>
+      <div class="row" style="margin-top:12px"><button class="btn" id="pzCheck">Check</button><button class="btn alt" id="pzRun">Run my code</button><button class="btn alt" id="pzMix">Mix again</button></div>
+      <div id="pzFb"></div>
+      <div id="pzRunner"></div>
+    </div>
+  </div>
 </section>
 
-<section>
-  <span class="step">7</span>
-  <h2>Challenge: password strength checker</h2>
-  <p><code>len()</code> counts the characters in a string. <code>len("cat")</code> gives <code>3</code>.</p>
-  <pre id="code-pw"><span class="c"># Password strength checker</span>
-password = <span class="k">input</span>(<span class="s">"Password: "</span>)
-<span class="k">if</span> <span class="k">len</span>(password) &gt;= <span class="n">12</span>:
-    <span class="k">print</span>(<span class="s">"Strong"</span>)
-<span class="k">elif</span> <span class="k">len</span>(password) &gt;= <span class="n">8</span>:
-    <span class="k">print</span>(<span class="s">"Medium"</span>)
-<span class="k">else</span>:
-    <span class="k">print</span>(<span class="s">"Weak"</span>)</pre>
-  <button type="button" class="open-btn" data-load="code-pw">Open in the Python editor</button>
-  <table>
-    <tr><th>Type this</th><th>Characters</th><th>Expected output</th></tr>
-    <tr><td><code>cat</code></td><td>3</td><td>Weak</td></tr>
-    <tr><td><code>sunshine</code></td><td>8</td><td>Medium</td></tr>
-    <tr><td><code>sunshine1234</code></td><td>12</td><td>Strong</td></tr>
-  </table>
-  <div class="tip">Never type your real password into a program. Make one up for testing.</div>
+<!-- 5 BUILD -->
+<section data-title="5. Build in Thonny (Swap)" data-short="Build" data-min="20" data-m="build">
+  <h2>Build the sorting hat in Thonny</h2>
+  <div class="stepper" id="bStepper"></div>
+  <div id="bStage"></div>
 </section>
 
-<section>
-  <span class="step">8</span>
-  <h2>Common mistakes</h2>
-  <ul>
-    <li>Using <code>=</code> instead of <code>==</code> in a condition. This gives a SyntaxError.</li>
-    <li>Forgetting the colon <code>:</code> at the end of <code>if</code>, <code>elif</code> or <code>else</code>.</li>
-    <li>Forgetting to indent the line under <code>if</code>. Use 4 spaces (Thonny does it for you).</li>
-    <li>Comparing a number from <code>input()</code> without <code>int()</code>. <code>"90" &gt;= 80</code> gives a TypeError.</li>
-    <li>Putting a condition after <code>else</code>. Only <code>if</code> and <code>elif</code> have conditions.</li>
-  </ul>
+<!-- 6 TEST -->
+<section data-title="6. Test and finish" data-short="Test" data-min="9" data-m="test">
+  <h2>Test every branch</h2>
+  <div class="stepper" data-stepper="test"></div>
+  <div class="pane" data-name="Test your hat" data-ok="haunt">
+    <p class="inst" style="margin-bottom:4px">Run your <b>Stage 2</b> hat from Build and type each colour. Does the output match? Click <b>Yes</b> or <b>No</b>.</p>
+    <button class="linkbtn" data-reveal style="margin-bottom:12px">Show the Stage 2 code</button>
+    <div class="reveal" style="background:none;padding:0;margin:0 0 12px"><div data-code="hat3" data-levels="1"></div></div>
+    <div class="pumps" id="pumps" aria-live="polite"></div>
+    <div class="thead"><span>#</span><span>Type this</span><span>Expected output</span><span>Branch it tests</span><span>Did it match?</span></div>
+    <div id="trows"></div>
+    <div class="tdone" id="tdone"></div>
+    <details class="nothonny"><summary>No Thonny? Run the sorting hat here</summary><div id="hrunner"></div></details>
+  </div>
+  <div class="pane" data-name="Test a friend's bot" data-ok="swap">
+    <p class="inst">Swap computers with another pair. Test their bot with <b>every answer</b>, plus <b>one answer they did not plan for</b>.</p>
+    <div class="card"><label class="tick2"><input type="checkbox" id="swapTick"> We tested a friend's bot and told them what we found</label></div>
+  </div>
+  <div class="pane" data-name="Exit questions" data-ok="exit">
+    <p class="inst">Say your answer to your partner first. Then click the question to check.</p>
+    <div class="card"><div id="exit"></div></div>
+  </div>
+  <div class="pane" data-name="Save and finish">
+    <p class="inst">Save your file as <b>Y7_Surname_SortingHat.py</b>. Well done!</p>
+    <div class="result" id="finalCard"></div>
+    <div class="remember" style="margin-top:14px"><b>Remember:</b> Python checks the conditions <b>from the top</b> and runs <b>only the first True branch</b>. If none are True, the <code>else</code> runs. Next time: a <b>Halloween chatbot</b>.</div>
+  </div>
 </section>
-
-<footer>Golden International School · Year 7 Digital Technologies</footer>
 
 </main>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js"></script>
+
+<div class="foot"><div class="in2">
+  <button class="btn alt" id="prev">← Back</button>
+  <div class="where" id="where"></div>
+  <button class="btn" id="next">Next →</button>
+</div></div>
+
+<script type="text/plain" id="harness">
+import sys, traceback, js
+
+class _Stopped(Exception): pass
+class _TooLong(Exception): pass
+_writes = [0]
+
+class _Writer:
+    def write(self, s):
+        _writes[0] += 1
+        if _writes[0] > 3000:
+            raise _TooLong()
+        js.runnerOut(s, "")
+        return len(s)
+    def flush(self):
+        pass
+
+def run_student(src, preset):
+    feed = preset.split("\n") if preset.strip() else []
+    _writes[0] = 0
+    count = [0]
+    def tracer(frame, event, arg):
+        if frame.f_code.co_filename == "<student>" and event == "line":
+            count[0] += 1
+            if count[0] > 200000:
+                raise _TooLong()
+        return tracer
+    def student_input(prompt=""):
+        prompt = str(prompt)
+        js.runnerOut(prompt, "")
+        if feed:
+            value = feed.pop(0)
+        else:
+            value = js.window.prompt(prompt if prompt else "Type your answer:")
+            if value is None:
+                raise _Stopped()
+        js.runnerOut(str(value) + "\n", "in")
+        return str(value)
+    g = {"__name__": "__main__", "input": student_input}
+    old_out, old_err = sys.stdout, sys.stderr
+    sys.stdout = _Writer()
+    sys.stderr = _Writer()
+    try:
+        code = compile(src, "<student>", "exec")
+        sys.settrace(tracer)
+        exec(code, g)
+        sys.settrace(None)
+        js.runnerOut("\nProgram finished.", "okn")
+    except _Stopped:
+        sys.settrace(None)
+        js.runnerOut("\nProgram stopped. You clicked Cancel.", "note")
+    except _TooLong:
+        sys.settrace(None)
+        js.runnerOut("\nStopped: the program ran for too long. Is there a loop that never ends?", "err")
+    except SyntaxError as e:
+        sys.settrace(None)
+        js.runnerOut(f"\nLine {e.lineno}: {type(e).__name__}: {e.msg}", "err")
+    except Exception as e:
+        sys.settrace(None)
+        lines = [f.lineno for f in traceback.extract_tb(e.__traceback__) if f.filename == "<student>"]
+        where = f"Line {lines[-1]}: " if lines else ""
+        js.runnerOut(f"\n{where}{type(e).__name__}: {e}", "err")
+    finally:
+        sys.settrace(None)
+        sys.stdout, sys.stderr = old_out, old_err
+</script>
+
 <script>
-(function () {
-  var code = document.getElementById('code');
-  var gutter = document.getElementById('gutter');
-  var shell = document.getElementById('shell');
-  var shellIn = document.getElementById('shellIn');
-  var shellLabel = document.getElementById('shellLabel');
-  var runBtn = document.getElementById('runBtn');
-  var stopBtn = document.getElementById('stopBtn');
-  var clearBtn = document.getElementById('clearBtn');
-  var statusEl = document.getElementById('pyStatus');
-  var py = null, booting = null, running = false, pending = null;
-  var decOut = new TextDecoder(), decErr = new TextDecoder();
+(function(){
+const TRACES = {"score": {"src": "score = int(input(\"Score out of 100: \"))\nif score >= 80:\n    print(\"Excellent\")\nelif score >= 50:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")\nprint(\"Done!\")", "keep": ["score"], "runs": {"85": [{"line": 1, "vars": {}, "out": ""}, {"line": 2, "vars": {"score": "85"}, "out": "Score out of 100: 85\n"}, {"line": 3, "vars": {"score": "85"}, "out": "Score out of 100: 85\n"}, {"line": 8, "vars": {"score": "85"}, "out": "Score out of 100: 85\nExcellent\n"}, {"line": 0, "vars": {"score": "85"}, "out": "Score out of 100: 85\nExcellent\nDone!\n"}], "60": [{"line": 1, "vars": {}, "out": ""}, {"line": 2, "vars": {"score": "60"}, "out": "Score out of 100: 60\n"}, {"line": 4, "vars": {"score": "60"}, "out": "Score out of 100: 60\n"}, {"line": 5, "vars": {"score": "60"}, "out": "Score out of 100: 60\n"}, {"line": 8, "vars": {"score": "60"}, "out": "Score out of 100: 60\nPass\n"}, {"line": 0, "vars": {"score": "60"}, "out": "Score out of 100: 60\nPass\nDone!\n"}], "30": [{"line": 1, "vars": {}, "out": ""}, {"line": 2, "vars": {"score": "30"}, "out": "Score out of 100: 30\n"}, {"line": 4, "vars": {"score": "30"}, "out": "Score out of 100: 30\n"}, {"line": 7, "vars": {"score": "30"}, "out": "Score out of 100: 30\n"}, {"line": 8, "vars": {"score": "30"}, "out": "Score out of 100: 30\nTry again\n"}, {"line": 0, "vars": {"score": "30"}, "out": "Score out of 100: 30\nTry again\nDone!\n"}]}}};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const store={get(k,d){try{const v=localStorage.getItem('y7sel_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('y7sel_'+k,JSON.stringify(v))}catch(e){}}};
 
-  /* ---------- editor ---------- */
-  function updateGutter() {
-    var n = code.value.split('\n').length, s = '';
-    for (var i = 1; i <= n; i++) s += i + '\n';
-    gutter.textContent = s;
-    gutter.scrollTop = code.scrollTop;
-  }
-  code.addEventListener('input', updateGutter);
-  code.addEventListener('scroll', function () { gutter.scrollTop = code.scrollTop; });
-  code.addEventListener('keydown', function (e) {
-    var start = code.selectionStart, end = code.selectionEnd, v = code.value;
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      code.setRangeText('    ', start, end, 'end');
-      updateGutter();
-    } else if (e.key === 'Enter' && !e.ctrlKey && !e.metaKey) {
-      e.preventDefault();
-      var lineStart = v.lastIndexOf('\n', start - 1) + 1;
-      var line = v.slice(lineStart, start);
-      var indent = line.match(/^ */)[0];
-      if (/:\s*$/.test(line)) indent += '    ';
-      code.setRangeText('\n' + indent, start, end, 'end');
-      updateGutter();
-    } else if (e.key === 'Backspace' && start === end) {
-      var ls = v.lastIndexOf('\n', start - 1) + 1;
-      var before = v.slice(ls, start);
-      if (before.length > 0 && before.length % 4 === 0 && /^ +$/.test(before)) {
-        e.preventDefault();
-        code.setRangeText('', start - 4, start, 'end');
-        updateGutter();
-      }
-    }
-  });
-  updateGutter();
+const CODE = {
+hook:`name = input("Your name: ")
+colour = input("Pick a colour: ")
+if colour == "red":
+    house = "Fire"
+elif colour == "blue":
+    house = "Water"
+elif colour == "green":
+    house = "Forest"
+else:
+    house = "Sky"
+print(f"{name} is in {house} House!")`,
+score:`score = int(input("Score out of 100: "))
+if score >= 80:
+    print("Excellent")
+elif score >= 50:
+    print("Pass")
+else:
+    print("Try again")
+print("Done!")`,
+hat2:`colour = input("Pick a colour: ")
+if colour == "red":
+    print("Fire House")
+else:
+    print("Sky House")`,
+hat3:`colour = input("Pick a colour: ")
+if colour == "red":
+    print("Fire House")
+elif colour == "blue":
+    print("Water House")
+elif colour == "green":
+    print("Forest House")
+else:
+    print("Sky House")`,
+bot:`# My bot: change the question and the replies!
+mood = input("Mood? (happy, tired, bored) ")
+if mood == "happy":
+    print("Play a loud song and dance!")
+elif mood == "tired":
+    print("Play a slow song and rest.")
+elif mood == "bored":
+    print("Try a song you have never heard.")
+else:
+    print("I don't know that mood.")`,
+pw:`password = input("Password: ")
+if len(password) >= 12:
+    print("Strong")
+elif len(password) >= 8:
+    print("Medium")
+else:
+    print("Weak")`,
+pw3:`password = input("Password: ")
+if password == "password123":
+    print("Too easy to guess!")
+elif len(password) >= 12:
+    print("Strong")
+elif len(password) >= 8:
+    print("Medium")
+else:
+    print("Weak")`
+};
 
-  /* ---------- shell ---------- */
-  function write(text, cls) {
-    if (!text) return;
-    var last = shell.lastChild;
-    if (last && last.nodeType === 1 && last.className === (cls || 'out')) {
-      last.textContent += text;
-    } else {
-      var span = document.createElement('span');
-      span.className = cls || 'out';
-      span.textContent = text;
-      shell.appendChild(span);
-    }
-    shell.scrollTop = shell.scrollHeight;
-  }
-  function setStatus(t) { statusEl.textContent = t; }
-  function setRunning(on) {
-    running = on;
-    stopBtn.disabled = !on;
-    setStatus(on ? 'Running...' : 'Ready');
-  }
+/* ---------- helpers ---------- */
+const KW=new Set(["if","elif","else","for","in","while","and","or","not","True","False","import"]);
+const FN=new Set(["print","input","int","float","str","len","range","type","lower"]);
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function hl(line){const re=/(#.*$)|(f?"[^"]*")|([A-Za-z_][A-Za-z0-9_]*)|(\d+)|(\s+)|(.)/g;let o="",m;
+  while((m=re.exec(line))!==null){if(m[0]==="")break;const t=esc(m[0]);
+    if(m[1])o+=`<span class="t-com">${t}</span>`;else if(m[2])o+=`<span class="t-str">${t}</span>`;
+    else if(m[3]&&KW.has(m[3]))o+=`<span class="t-kw">${t}</span>`;else if(m[3]&&FN.has(m[3]))o+=`<span class="t-fn">${t}</span>`;
+    else if(m[4])o+=`<span class="t-num">${t}</span>`;else o+=t}return o}
+function lvl(line){return line.trim()===""?0:Math.floor(line.match(/^ */)[0].length/4)}
+function codeBlock(src,opt={}){const pre=document.createElement("pre");pre.className="code"+(opt.levels?" levels":"");
+  const nw=new Set(opt.newLines||[]);
+  src.split("\n").forEach((line,i)=>{const s=document.createElement("span");s.className="ln"+(nw.has(i+1)?" new":"");s.dataset.n=i+1;
+    if(opt.levels&&!nw.has(i+1)){s.dataset.l=lvl(line);if(line.trim())s.dataset.badge="L"+lvl(line)}
+    s.innerHTML=hl(line)||" ";pre.appendChild(s)});return pre}
+function pop(el,v){el.textContent=v;el.classList.add('pop');setTimeout(()=>el.classList.remove('pop'),200)}
+function choice(item){const box=document.createElement("div");
+  box.innerHTML=item.q?`<p style="font-weight:700;margin:0">${esc(item.q)}</p>`:'';
+  const opts=document.createElement("div");opts.className="opts";const fb=document.createElement("div");
+  item.opts.forEach((o,i)=>{const b=document.createElement("button");b.className="opt"+(item.code?" codeopt":(item.mono?" mono":""));b.textContent=(item.code?"ABCD"[i]+".\n":"")+o;
+    b.onclick=()=>{const ok=i===item.ans;if(ok&&item.onRight)item.onRight();[...opts.children].forEach((x,j)=>{x.disabled=true;if(j===item.ans)x.classList.add("right")});if(!ok)b.classList.add("wrong");
+      fb.className="fb "+(ok?"ok":"no");fb.innerHTML=`<b>${ok?"Correct.":"Not quite."}</b>${esc(item.why)}`};opts.appendChild(b)});
+  if(item.code){opts.style.gridTemplateColumns="repeat(auto-fit,minmax(min(240px,100%),1fr))";opts.style.marginTop="0"}
+  box.appendChild(opts);box.appendChild(fb);
+  const again=document.createElement("button");again.className="btn alt sm";again.style.marginTop="10px";again.textContent="Try again";
+  again.onclick=()=>{box.replaceWith(choice(item))};box.appendChild(again);return box}
 
-  /* ---------- Python ---------- */
-  var DRIVER = [
-    'import ast, sys, traceback',
-    'from js import askInput',
-    'async def __ainput(prompt=""):',
-    '    print(prompt, end="")',
-    '    sys.stdout.flush()',
-    '    try:',
-    '        return str(await askInput())',
-    '    except Exception:',
-    '        raise KeyboardInterrupt',
-    'class _AwaitInput(ast.NodeTransformer):',
-    '    depth = 0',
-    '    def _inside(self, node):',
-    '        self.depth += 1',
-    '        self.generic_visit(node)',
-    '        self.depth -= 1',
-    '        return node',
-    '    visit_FunctionDef = _inside',
-    '    visit_AsyncFunctionDef = _inside',
-    '    visit_Lambda = _inside',
-    '    visit_ClassDef = _inside',
-    '    def visit_Call(self, node):',
-    '        self.generic_visit(node)',
-    '        if self.depth == 0 and isinstance(node.func, ast.Name) and node.func.id == "input":',
-    '            node.func = ast.copy_location(ast.Name("__ainput", ast.Load()), node.func)',
-    '            return ast.copy_location(ast.Await(node), node)',
-    '        return node',
-    'user_ns = {"__name__": "__main__"}',
-    '_src_lines = []',
-    'def _show_error(e, files=("<editor>", "<shell>")):',
-    '    if isinstance(e, SyntaxError):',
-    '        if e.lineno:',
-    '            print(f\'  File "editor.py", line {e.lineno}\', file=sys.stderr)',
-    '        if e.text:',
-    '            t = e.text.rstrip("\\n")',
-    '            stripped = t.lstrip()',
-    '            print("    " + stripped, file=sys.stderr)',
-    '            if e.offset:',
-    '                col = max(e.offset - 1 - (len(t) - len(stripped)), 0)',
-    '                print("    " + " " * col + "^", file=sys.stderr)',
-    '        print(f"{type(e).__name__}: {e.msg}", file=sys.stderr)',
-    '        return',
-    '    frames = [f for f in traceback.extract_tb(e.__traceback__) if f.filename in files]',
-    '    if frames:',
-    '        print("Traceback (most recent call last):", file=sys.stderr)',
-    '        for f in frames:',
-    '            name = "editor.py" if f.filename == "<editor>" else "<shell>"',
-    '            print(f\'  File "{name}", line {f.lineno}, in {f.name}\', file=sys.stderr)',
-    '            if f.filename == "<editor>" and 0 < f.lineno <= len(_src_lines):',
-    '                print("    " + _src_lines[f.lineno - 1].strip(), file=sys.stderr)',
-    '    msg = str(e)',
-    '    print(f"{type(e).__name__}: {msg}" if msg else type(e).__name__, file=sys.stderr)',
-    'async def run_user(src):',
-    '    global user_ns, _src_lines',
-    '    user_ns = {"__name__": "__main__", "__ainput": __ainput}',
-    '    _src_lines = src.splitlines()',
-    '    try:',
-    '        tree = ast.parse(src, "<editor>")',
-    '        tree = ast.fix_missing_locations(_AwaitInput().visit(tree))',
-    '        compiled = compile(tree, "<editor>", "exec", flags=ast.PyCF_ALLOW_TOP_LEVEL_AWAIT)',
-    '    except SyntaxError as e:',
-    '        _show_error(e)',
-    '        return',
-    '    try:',
-    '        result = eval(compiled, user_ns)',
-    '        if result is not None and hasattr(result, "__await__"):',
-    '            await result',
-    '    except KeyboardInterrupt:',
-    '        print("\\nKeyboardInterrupt: program stopped", file=sys.stderr)',
-    '    except BaseException as e:',
-    '        _show_error(e)',
-    '    sys.stdout.flush(); sys.stderr.flush()',
-    'def run_shell(line):',
-    '    try:',
-    '        try:',
-    '            value = eval(compile(line, "<shell>", "eval"), user_ns)',
-    '            if value is not None:',
-    '                print(repr(value))',
-    '        except SyntaxError:',
-    '            exec(compile(line, "<shell>", "exec"), user_ns)',
-    '    except BaseException as e:',
-    '        _show_error(e, ("<shell>",))',
-    '    sys.stdout.flush(); sys.stderr.flush()'
-  ].join('\n');
+/* ---------- Python runner ---------- */
+let pyP=null,curOut=null;
+window.runnerOut=(t,c)=>{if(!curOut)return;const s=document.createElement("span");if(c)s.className=c;s.textContent=t;curOut.appendChild(s)};
+function loadPy(){if(pyP)return pyP;pyP=new Promise((res,rej)=>{const s=document.createElement("script");s.src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js";
+  s.onload=async()=>{try{const py=await loadPyodide();await py.runPythonAsync($("#harness").textContent);res(py)}catch(e){rej(e)}};s.onerror=()=>rej(new Error("load"));document.head.appendChild(s)});
+  pyP.catch(()=>{pyP=null});return pyP}
+function makeRunner(src,o={}){const box=document.createElement("div");box.className="runner";
+  box.innerHTML=`<div class="runner-bar"><span class="name">${esc(o.name||"program.py")}</span><button class="rbtn run" type="button">Run</button><button class="rbtn inp" type="button">Inputs</button><button class="rbtn edit" type="button">Hide code</button><button class="rbtn copy" type="button">Copy</button><button class="rbtn reset" type="button">Reset</button></div>
+  <div class="editor"><div class="gutter" aria-hidden="true"></div><textarea spellcheck="false" autocapitalize="off" autocomplete="off" aria-label="Python code editor"></textarea></div>
+  <div class="inputs-row"><label>Inputs, one per line. After these, a box pops up.</label><textarea spellcheck="false" aria-label="Inputs, one per line"></textarea></div>
+  <div class="out-head"><span>Output</span><span class="st"></span></div><pre class="out" aria-live="polite"><span class="note">Click Run to see the output.</span></pre>`;
+  const ta=box.querySelector(".editor textarea"),gut=box.querySelector(".gutter"),inRow=box.querySelector(".inputs-row"),inTa=inRow.querySelector("textarea"),
+    out=box.querySelector(".out"),st=box.querySelector(".st"),runB=box.querySelector(".run"),ed=box.querySelector(".editor"),edB=box.querySelector(".edit");
+  const fit=()=>{const n=ta.value.split("\n").length;gut.textContent=Array.from({length:n},(_,i)=>i+1).join("\n");ta.rows=Math.max(3,Math.min(n+1,22))};
+  box.setCode=v=>{ta.value=v;fit()};ta.value=src;fit();
+  const setEd=on=>{ed.style.display=on?"":"none";edB.textContent=on?"Hide code":"Edit code"};edB.onclick=()=>setEd(ed.style.display==="none");
+  if(o.hide)setEd(false);else edB.style.display="none";
+  if(o.inputs){inTa.value=o.inputs;inRow.classList.add("show")}
+  ta.addEventListener("input",fit);ta.addEventListener("scroll",()=>{gut.scrollTop=ta.scrollTop});
+  ta.addEventListener("keydown",e=>{const s=ta.selectionStart,en=ta.selectionEnd,v=ta.value,ls=v.lastIndexOf("\n",s-1)+1;
+    if(e.key==="Tab"){e.preventDefault();if(e.shiftKey){if(v.slice(ls,ls+4)==="    "){ta.value=v.slice(0,ls)+v.slice(ls+4);ta.selectionStart=ta.selectionEnd=Math.max(ls,s-4)}}
+      else{ta.value=v.slice(0,s)+"    "+v.slice(en);ta.selectionStart=ta.selectionEnd=s+4}fit()}
+    else if(e.key==="Enter"){e.preventDefault();const line=v.slice(ls,s);let ind=line.match(/^ */)[0];if(line.trimEnd().endsWith(":"))ind+="    ";
+      ta.value=v.slice(0,s)+"\n"+ind+v.slice(en);ta.selectionStart=ta.selectionEnd=s+1+ind.length;fit()}});
+  box.querySelector(".inp").onclick=()=>inRow.classList.toggle("show");
+  box.querySelector(".reset").onclick=()=>{ta.value=src;fit()};
+  box.querySelector(".copy").onclick=async e=>{try{await navigator.clipboard.writeText(ta.value);e.target.textContent="Copied"}catch(x){ta.select();e.target.textContent="Press Ctrl+C"}setTimeout(()=>e.target.textContent="Copy",1500)};
+  runB.onclick=async()=>{runB.disabled=true;out.replaceChildren();curOut=out;
+    if(!window.__py){st.textContent="Loading Python...";window.runnerOut("Loading Python. The first time takes about 10 to 30 seconds...","note")}
+    try{const py=await loadPy();window.__py=true;out.replaceChildren();st.textContent="Running";await new Promise(r=>setTimeout(r,30));curOut=out;
+      py.globals.get("run_student")(ta.value,inRow.classList.contains("show")?inTa.value:"");st.textContent=""}
+    catch(e){out.replaceChildren();window.runnerOut("Python could not load. Check the internet connection and click Run again, or click Copy and run the code in Thonny.","err");st.textContent=""}
+    curOut=null;runB.disabled=false};
+  return box}
 
-  window.askInput = function () {
-    return new Promise(function (resolve, reject) {
-      pending = { resolve: resolve, reject: reject };
-      shellLabel.textContent = 'Answer:';
-      shellIn.classList.add('waiting');
-      shellIn.placeholder = 'Type your answer and press Enter';
-      shellIn.focus({ preventScroll: true });
-    });
-  };
-  function endWaiting() {
-    pending = null;
-    shellLabel.textContent = '>>>';
-    shellIn.classList.remove('waiting');
-    shellIn.placeholder = 'Type here and press Enter';
-  }
+/* ---------- missions and aura ---------- */
+const MISSIONS={
+ hook:[["h2","Get sorted into 2 different houses",10],["h4","Collect all 4 houses",30],["trap","Trick the hat (hint: capital letters)",30]],
+ review:[["rvdone","Finish the review game",20],["rvlives","Finish with all 3 lives",30]],
+ flow:[["fdia","Click both diamonds",10],["m1","Solve Match 1",20],["m2","Solve Match 2",20],["t85","Trace 85",10],["t60","Trace 60",10],["t30","Trace 30",10]],
+ pz:[["pz","Solve the puzzle",30],["pzrun","Run your puzzle code",10]],
+ build:[["s1","Finish Stage 1",20],["s2","Finish Stage 2",20],["s3","Finish Stage 3: your own bot",30]],
+ test:[["haunt","Test all 5 branches",40],["swap","Test a friend's bot",20],["exit","Check all 3 exit questions",20]]};
+const LEVELS=[[0,"🥚 Egg"],[80,"🐣 Tadpole"],[180,"🐸 Frog"],[300,"👑 Frog King"]];
+const PTS={},SEC_OF={};Object.entries(MISSIONS).forEach(([sec,ms])=>ms.forEach(([id,,p])=>{PTS[id]=p;SEC_OF[id]=sec}));
+let done=new Set(store.get('done',[]));
+const levelOf=a=>LEVELS.filter(l=>a>=l[0]).pop()[1];
+const auraTotal=()=>[...done].reduce((t,id)=>t+(PTS[id]||0),0);
+function drawAura(bump){const a=auraTotal();$('#auraPts').textContent=a;$('#auraLvl').textContent=levelOf(a);if(bump){const el=$('#aura');el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump')}
+  const fc=$('#finalCard');if(fc){const max=Object.values(PTS).reduce((x,y)=>x+y,0);fc.innerHTML=`<div style="font-size:44px">${levelOf(a).split(' ')[0]}</div><div><div class="big2">${a} aura</div><div>Level: <b>${levelOf(a)}</b> · ${done.size} of ${Object.keys(PTS).length} missions done (max ${max} aura)</div></div>`}}
+function drawMissions(){$$('main section[data-m]').forEach(sec=>{const box=sec.querySelector('.mission');const ms=MISSIONS[sec.dataset.m];if(!box||!ms)return;
+  box.innerHTML='<div class="mh">Your missions</div><ul>'+ms.map(([id,t,p])=>`<li class="${done.has(id)?'ok':''}"><span class="bx"></span><span class="mt">${esc(t)}</span><span class="pts">+${p} aura</span></li>`).join('')+'</ul>'});
+  $$('#steps button').forEach((b,k)=>{const m=secs[k].dataset.m;b.classList.toggle('done',!!m&&MISSIONS[m].every(([id])=>done.has(id)))})}
+let toastT=null;
+function toast(msg){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)}
+  t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2400)}
+function confetti(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;const cols=['#ffd166','#7a1f2b','#8fd9b6','#5cb1d6','#ff9d85','#c3b4f5'];
+  for(let i=0;i<40;i++){const c=document.createElement('div');c.className='confetti';c.style.left=Math.random()*100+'vw';c.style.background=cols[i%cols.length];c.style.animationDelay=(Math.random()*.4)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2200)}}
+function award(id){if(done.has(id)||!PTS[id])return;done.add(id);store.set('done',[...done]);
+  const before=levelOf(auraTotal()-PTS[id]),after=levelOf(auraTotal());
+  const m=MISSIONS[SEC_OF[id]].find(x=>x[0]===id);toast(`+${PTS[id]} aura · ${m[1]}`);drawMissions();drawAura(true);$$('[data-stepper]').forEach(sp=>sp._refresh&&sp._refresh());
+  if(before!==after){setTimeout(()=>{toast(`Level up! You are now ${after}`);confetti()},1300)}
+  else if(MISSIONS[SEC_OF[id]].every(([x])=>done.has(x)))confetti()}
 
-  function boot() {
-    if (booting) return booting;
-    if (typeof loadPyodide !== 'function') {
-      setStatus('Python could not load');
-      write('Python could not load. Check the internet connection, or use Thonny.\n', 'err');
-      return Promise.reject(new Error('no pyodide'));
-    }
-    setStatus('Starting Python (the first time takes a few seconds)...');
-    booting = loadPyodide().then(function (p) {
-      py = p;
-      py.setStdout({ raw: function (c) { write(decOut.decode(new Uint8Array([c]), { stream: true })); } });
-      py.setStderr({ raw: function (c) { write(decErr.decode(new Uint8Array([c]), { stream: true }), 'err'); } });
-      py.setStdin({ stdin: function () { var a = window.prompt('Your program is asking for input:'); return a === null ? '' : a; } });
-      py.runPython(DRIVER);
-      setStatus('Ready');
-      return py;
-    }).catch(function (err) {
-      booting = null;
-      setStatus('Python could not load');
-      write('Python could not load. Check the internet connection, or use Thonny.\n', 'err');
-      throw err;
-    });
-    return booting;
-  }
+/* ---------- navigation ---------- */
+const secs=$$('main section');
+let cur=Math.min(store.get('cur',0),secs.length-1),seen=new Set(store.get('seen',[0]));
+const nav=$('#steps'),map=$('#map');
+secs.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=`<span class="num"><span>${i===0?'★':i}</span></span><span class="lab">${esc(s.dataset.short)}</span>`;b.title=s.dataset.title;b.onclick=()=>go(i);nav.appendChild(b);
+  if(i>0){const m=document.createElement('button');m.innerHTML=`<span>${s.dataset.title}</span><b>${s.dataset.min} min</b>`;m.onclick=()=>go(i);map.appendChild(m)}});
+function go(i){cur=Math.max(0,Math.min(secs.length-1,i));seen.add(cur);
+  secs.forEach((s,k)=>s.classList.toggle('on',k===cur));
+  $$('#steps button').forEach((b,k)=>{b.classList.toggle('on',k===cur);b.classList.toggle('seen',seen.has(k))});
+  nav.children[cur].scrollIntoView({inline:'center',block:'nearest'});
+  $('#prog').style.width=(cur/(secs.length-1)*100)+'%';
+  $('#prev').disabled=cur===0;$('#next').disabled=cur===secs.length-1;
+  $('#where').textContent=cur===0?'Start':`Part ${cur} of ${secs.length-1}`;
+  $('#next').textContent=cur<secs.length-1?`Next: ${secs[cur+1].dataset.short} →`:'Finished!';
+  window.scrollTo({top:0});resetTimer();store.set('cur',cur);store.set('seen',[...seen])}
+$('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);
+document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;
+  if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+if($('#fs'))$('#fs').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
 
-  function run() {
-    if (running) return;
-    boot().then(function () {
-      shell.textContent = '';
-      write('>>> ', 'prompt');
-      write('%Run editor.py\n', 'runcmd');
-      setRunning(true);
-      py.globals.set('__src', code.value);
-      return py.runPythonAsync('await run_user(__src)');
-    }).catch(function (err) {
-      if (py) write(String(err) + '\n', 'err');
-    }).then(function () {
-      if (pending) endWaiting();
-      if (py) {
-        var t = shell.textContent;
-        write((t && t.slice(-1) !== '\n' ? '\n' : '') + '>>> ', 'prompt');
-        setRunning(false);
-      }
-    });
-  }
+/* ---------- timer ---------- */
+let left=0,tick=null;
+const hasTimer=!!$('#timer');
+function show(){if(!hasTimer)return;const m=Math.floor(Math.abs(left)/60),s=Math.abs(left)%60;$('#tleft').textContent=(left<0?'+':'')+m+':'+String(s).padStart(2,'0');$('#timer').classList.toggle('done',left<=0)}
+function resetTimer(){if(!hasTimer)return;clearInterval(tick);tick=null;left=(+secs[cur].dataset.min)*60;$('#tgo').textContent='Start';show()}
+if(hasTimer)$('#tgo').onclick=()=>{if(tick){clearInterval(tick);tick=null;$('#tgo').textContent='Start'}else{tick=setInterval(()=>{left--;show()},1000);$('#tgo').textContent='Pause'}};
+if(hasTimer)$('#treset').onclick=resetTimer;
 
-  runBtn.addEventListener('click', run);
-  code.addEventListener('keydown', function (e) {
-    if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && e.key === 'Enter')) { e.preventDefault(); run(); }
-  });
-  stopBtn.addEventListener('click', function () {
-    if (pending) { var p = pending; endWaiting(); p.reject(new Error('stop')); }
-  });
-  clearBtn.addEventListener('click', function () { shell.textContent = ''; });
+/* ---------- static code and runners ---------- */
+$$('[data-code]').forEach(el=>el.appendChild(codeBlock(CODE[el.dataset.code],{levels:el.dataset.levels==="1"})));
+$$('[data-runner]').forEach(el=>el.appendChild(makeRunner(CODE[el.dataset.runner],{name:el.dataset.name,hide:el.dataset.hide==="1",inputs:el.dataset.inputs})));
+$$('[data-reveal]').forEach(b=>b.onclick=()=>b.nextElementSibling.classList.toggle('show'));
+$$('[data-runner="pw"] .run').forEach(b=>b.addEventListener('click',()=>award('pwrun')));
 
-  shellIn.addEventListener('keydown', function (e) {
-    if (e.key !== 'Enter') return;
-    var text = shellIn.value;
-    shellIn.value = '';
-    if (pending) {
-      var p = pending;
-      write(text + '\n', 'inp');
-      endWaiting();
-      p.resolve(text);
-      return;
-    }
-    if (running || !text.trim()) return;
-    boot().then(function () {
-      if (!shell.lastChild || shell.lastChild.className !== 'prompt') write('>>> ', 'prompt');
-      write(text + '\n', 'inp');
-      py.globals.set('__line', text);
-      py.runPython('run_shell(__line)');
-      write('>>> ', 'prompt');
-    });
-  });
-
-  document.querySelectorAll('button[data-load]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      code.value = document.getElementById(b.getAttribute('data-load')).textContent;
-      updateGutter();
-      document.getElementById('editor').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      boot().catch(function () {});
-    });
-  });
+/* ---------- 1. hook ---------- */
+const HOUSES={Fire:["#c0392b","#e0644f","#8e2418","🔥","Brave and loud. You press Run before you read the code."],
+  Water:["#2c6fbb","#5b9be0","#1d4f8a","💧","Calm and cool. Red error text? You just fix it."],
+  Forest:["#2e8b57","#8fc06b","#4a6337","🌿","Patient and kind. You are the one who finds everyone's bugs."],
+  Sky:["#7d4fb3","#b18ae0","#5a3590","☁️","One of a kind. Nobody planned for your answer, so the else caught you."]};
+function frog(body,dark){return `<svg viewBox="0 0 200 195" aria-hidden="true"><g stroke="${dark}" stroke-width="8" fill="${dark}"><circle cx="60" cy="58" r="27"/><circle cx="140" cy="58" r="27"/><ellipse cx="100" cy="118" rx="82" ry="60"/><ellipse cx="58" cy="172" rx="24" ry="11"/><ellipse cx="142" cy="172" rx="24" ry="11"/></g><g fill="${body}"><circle cx="60" cy="58" r="27"/><circle cx="140" cy="58" r="27"/><ellipse cx="100" cy="118" rx="82" ry="60"/><ellipse cx="58" cy="172" rx="24" ry="11"/><ellipse cx="142" cy="172" rx="24" ry="11"/></g><ellipse cx="100" cy="136" rx="50" ry="34" fill="#fff" opacity=".55"/><circle cx="60" cy="60" r="10" fill="#2b2420"/><circle cx="63" cy="56" r="3.5" fill="#fff"/><circle cx="140" cy="60" r="10" fill="#2b2420"/><circle cx="143" cy="56" r="3.5" fill="#fff"/><ellipse cx="46" cy="92" rx="13" ry="8" fill="#f4a383" opacity=".85"/><ellipse cx="154" cy="92" rx="13" ry="8" fill="#f4a383" opacity=".85"/><path d="M89 90 Q94.5 97 100 90 Q105.5 97 111 90" fill="none" stroke="#2b2420" stroke-width="3.5" stroke-linecap="round"/></svg>`}
+let houses=new Set(store.get('houses',[]));
+function drawShelf(){$('#shelf').innerHTML=Object.keys(HOUSES).map(h=>`<div class="slot${houses.has(h)?' got':''}">${frog(HOUSES[h][1],HOUSES[h][2])}${houses.has(h)?h:'?'}</div>`).join('')}
+drawShelf();
+(function(){
+  const pre=codeBlock(CODE.hook);$('#hookCode').appendChild(pre);const ls=[...pre.querySelectorAll('.ln')];
+  const CHAIN=[[3,"red","Fire",4],[5,"blue","Water",6],[7,"green","Forest",8]];
+  const btns=()=>[...$$('.sw'),$('#ownGo')];let busy=false;
+  const wait=ms=>new Promise(r=>setTimeout(r,ms));
+  async function sort(col){if(busy)return;busy=true;btns().forEach(b=>b.disabled=true);
+    const name=($('#hatName').value.trim()||'Player');
+    ls.forEach(l=>l.classList.remove('yes','no','ran','skip','cur'));$('#house').classList.remove('show');$('#hookSay').textContent='';
+    $('#hookOut').innerHTML=`Your name: <span class="in">${esc(name)}</span>\nPick a colour: <span class="in">${esc(col)}</span>`;
+    $('#thinking').classList.add('show');
+    ls[0].classList.add('ran');ls[1].classList.add('ran');await wait(400);
+    let house=null,checked=0;
+    for(const [ln,val,h,body] of CHAIN){
+      if(house){ls[ln-1].classList.add('skip');ls[body-1].classList.add('skip');continue}
+      checked++;ls[ln-1].classList.add('cur');await wait(650);ls[ln-1].classList.remove('cur');
+      if(col===val){ls[ln-1].classList.add('yes');await wait(300);ls[body-1].classList.add('ran');house=h}
+      else{ls[ln-1].classList.add('no');ls[body-1].classList.add('skip')}}
+    if(house){ls[8].classList.add('skip');ls[9].classList.add('skip')}else{ls[8].classList.add('cur');await wait(500);ls[8].classList.remove('cur');ls[8].classList.add('ran');ls[9].classList.add('ran');house="Sky"}
+    await wait(300);ls[10].classList.add('ran');
+    $('#thinking').classList.remove('show');
+    const [bg,body,dark,emo,txt]=HOUSES[house];const hc=$('#house');hc.style.background=bg;
+    hc.innerHTML=`${frog(body,dark)}<div><h3>${esc(name)} is in ${house} House! ${emo}</h3><p>${esc(txt)}</p></div>`;hc.classList.add('show');
+    $('#hookOut').innerHTML+=`\n${esc(name)} is in ${house} House!`;
+    const trap=col!==col.toLowerCase()&&CHAIN.some(c=>c[1]===col.toLowerCase());
+    let say=`Python checked <b>${checked}</b> condition${checked===1?'':'s'} from the top. `;
+    say+=!CHAIN.some(c=>c[1]===col)?`Every condition was <b>False</b>, so the <code>else</code> ran.`:`The first <b>True</b> one won. Everything after it was skipped.`;
+    if(trap)say+=` 🕵️ <b>Trap found!</b> <code>"${esc(col)}"</code> is not the same as <code>"${esc(col.toLowerCase())}"</code>. Capital letters matter.`;
+    $('#hookSay').innerHTML=say;
+    const isNew=!houses.has(house);houses.add(house);store.set('houses',[...houses]);drawShelf();
+    if(isNew&&!trap)confetti();
+    if(houses.size>=2)award('h2');if(houses.size>=4)award('h4');if(trap)award('trap');
+    btns().forEach(b=>b.disabled=false);busy=false}
+  $$('.sw').forEach(b=>b.onclick=()=>sort(b.dataset.col));
+  const go2=()=>{const v=$('#ownCol').value.trim();if(v==="")return;sort(v)};
+  $('#ownGo').onclick=go2;$('#ownCol').addEventListener('keydown',e=>{if(e.key==='Enter')go2()});
 })();
 
-  document.querySelectorAll('button[data-a]').forEach(function (b) {
-    b.addEventListener('click', function () {
-      var a = document.getElementById(b.getAttribute('data-a'));
-      var show = a.hidden;
-      a.hidden = !show;
-      b.textContent = show ? 'Hide' : 'Check';
-    });
-  });
+/* ---------- 2. review game ---------- */
+const SCORECODE=`if score >= 80:
+    print("Excellent")
+elif score >= 50:
+    print("Pass")
+else:
+    print("Try again")`;
+const Q=[
+ {q:"True or False?",code:`7 > 10`,o:["True","False","Error"],a:1,why:"7 is not greater than 10, so the answer is False."},
+ {q:"True or False?",code:`5 == 5`,o:["True","False","Error"],a:0,why:"== asks: are they equal? 5 and 5 are equal, so True."},
+ {q:"True or False?",code:`"red" == "Red"`,o:["True","False","Error"],a:1,why:"Capital letters matter. \"red\" and \"Red\" are different strings."},
+ {q:"Which line compares two values?",o:["x = 5","x == 5","x =! 5","x := 5"],a:1,why:"= stores a value. == compares two values."},
+ {q:"score is 80. What prints?",code:SCORECODE,o:["Excellent","Pass","Try again","Nothing"],a:0,why:"80 >= 80 is True. >= means greater than OR equal to."},
+ {q:"score is 95. How many lines print?",code:SCORECODE,o:["1","2","3","0"],a:0,why:"95 >= 80 is True, so Excellent prints. Python stops at the first True branch. The elif is never checked."},
+ {q:"Python shows SyntaxError: expected ':'. What is missing?",code:`if score >= 50
+    print("Pass")`,o:["A bracket","A colon at the end of line 1","Quote marks","An indent on line 1"],a:1,why:"Every if, elif and else line ends with a colon."},
+ {q:"Which one has NO condition?",o:["if","elif","else","They all have one"],a:2,why:"else has no condition. It runs when everything above was False."},
+];
+let qi=0,qs=0,ql=3,qk=0,qDone=false;
+function qRender(){qDone=false;$('#qFb').textContent='';$('#qNext').disabled=true;$('#qCode').replaceChildren();
+  if(qi>=Q.length||ql<=0){
+    $('#qText').innerHTML=ql<=0?'💀 Game over. <b>lives = 0</b>. Click Start again.':`🎉 Finished! <b>${qs}</b> aura, with <b>${ql}</b> ${ql===1?'life':'lives'} left.`;
+    $('#qOpts').innerHTML='';$('#qNum').textContent='';$('#qNext').style.display='none';
+    if(qi>=Q.length){award('rvdone');if(ql===3)award('rvlives')}return}
+  $('#qNext').style.display='';
+  const it=Q[qi];$('#qNum').textContent=`Question ${qi+1} of ${Q.length}`;$('#qText').textContent=it.q;
+  if(it.code)$('#qCode').appendChild(codeBlock(it.code));
+  $('#qOpts').innerHTML=it.o.map((x,k)=>`<button class="opt mono" data-k="${k}">${'ABCD'[k]}. ${esc(x)}</button>`).join('');
+  $$('#qOpts .opt').forEach(b=>b.onclick=()=>{if(qDone)return;qDone=true;const k=+b.dataset.k;
+    $$('#qOpts .opt')[it.a].classList.add('right');
+    if(k===it.a){qk++;const bonus=qk>=3?5:0;qs+=10+bonus;pop($('#qScore'),qs);pop($('#qStreak'),qk);
+      $('#qFb').innerHTML=`<span style="color:var(--ok)">Correct! +10${bonus?' +5 streak bonus':''}.</span> <span style="font-weight:400">${esc(it.why)}</span>`}
+    else{b.classList.add('wrong');ql--;qk=0;pop($('#qLives'),ql);pop($('#qStreak'),0);$('#qFb').innerHTML=`<span style="color:var(--bad)">Not quite. lives = lives - 1.</span> <span style="font-weight:400">${esc(it.why)}</span>`}
+    $('#qNext').disabled=false;$('#qNext').textContent=(ql<=0||qi===Q.length-1)?'See result':'Next question'})}
+$('#qNext').onclick=()=>{qi++;qRender()};
+$('#qAgain').onclick=()=>{qi=0;qs=0;ql=3;qk=0;$('#qScore').textContent=0;$('#qLives').textContent=3;$('#qStreak').textContent=0;qRender()};
+qRender();
+
+/* ---------- 3. flowcharts ---------- */
+function chainSVG(spec){
+  const cx=190,bx=380,bw=210,hw=125,hh=54;let y=10,g='',H;
+  const node=(ln,inner)=>ln?`<g class="fs" data-ln="${ln}" tabindex="0" role="button">${inner}</g>`:`<g>${inner}</g>`;
+  const txt=(x,yy,t,w)=>`<text x="${x}" y="${yy}" text-anchor="middle" font-size="19" font-family="Atkinson Hyperlegible, Arial, sans-serif" fill="#1f1d24"${w?' font-weight="700"':''}>${esc(t)}</text>`;
+  const arrow=(x1,y1,x2,y2)=>`<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#1f1d24" stroke-width="2" marker-end="url(#ah${spec.id})"/>`;
+  g+=node(spec.startLn,`<rect x="${cx-100}" y="${y}" width="200" height="48" rx="24" fill="#efe7df" stroke="#1f1d24" stroke-width="2"/>`+txt(cx,y+31,spec.start));
+  y+=48;
+  spec.conds.forEach((c,i)=>{g+=arrow(cx,y,cx,y+26);if(i>0)g+=txt(cx+30,y+18,"False",1);const top=y+28,cy=top+hh;
+    g+=node(c.ln,`<polygon points="${cx},${top} ${cx+hw},${cy} ${cx},${top+2*hh} ${cx-hw},${cy}" fill="#ffd97a" stroke="#1f1d24" stroke-width="2"/>`+txt(cx,cy+6,c.c));
+    g+=arrow(cx+hw,cy,bx-2,cy)+txt((cx+hw+bx)/2,cy-8,"True",1);
+    g+=node(c.tln,`<rect x="${bx}" y="${cy-24}" width="${bw}" height="48" rx="8" fill="#ffffff" stroke="#1f1d24" stroke-width="2"/>`+txt(bx+bw/2,cy+7,c.t));
+    y=top+2*hh});
+  g+=arrow(cx,y,cx,y+26)+txt(cx+30,y+18,"False",1);
+  g+=node(spec.elsLn,`<rect x="${cx-100}" y="${y+28}" width="200" height="48" rx="8" fill="#ffffff" stroke="#1f1d24" stroke-width="2"/>`+txt(cx,y+59,spec.els));
+  H=y+28+48+10;
+  return `<svg viewBox="0 0 600 ${H}" role="img" aria-label="${esc(spec.label)}"><defs><marker id="ah${spec.id}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#1f1d24"/></marker></defs>${g}</svg>`}
+(function(){
+  $('#flowMain').innerHTML=chainSVG({id:"m",start:"Input score",startLn:1,conds:[{c:"score >= 80?",ln:2,t:"print Excellent",tln:3},{c:"score >= 50?",ln:4,t:"print Pass",tln:5}],els:"print Try again",elsLn:7,
+    label:"Flowchart: input score. Diamond score at least 80: True prints Excellent, False goes to diamond score at least 50: True prints Pass, False prints Try again."});
+  const diaSeen=new Set();const pre=codeBlock(CODE.score,{levels:true});$('#flowCode').appendChild(pre);const ls=[...pre.querySelectorAll('.ln')];
+  const SAY={1:"A rounded box is the start: the input. In the code: line 1.",2:"A <b>diamond</b> is a decision. This one is the <code>if</code> on line 2. True goes right, False goes down.",3:"The True path of the first diamond: line 3, indented under the if.",
+    4:"The second <b>diamond</b> is the <code>elif</code> on line 4. Python only gets here if the first diamond was False.",5:"The True path of the second diamond: line 5.",7:"The last box: both diamonds were False. That is the <code>else</code> (lines 6 and 7). The else has no diamond, because it asks no question."};
+  $$('#flowMain .fs').forEach(n=>{const pick=()=>{$$('#flowMain .fs').forEach(x=>x.classList.remove('sel'));n.classList.add('sel');const ln=+n.dataset.ln;
+      ls.forEach(l=>l.classList.remove('cur'));ls[ln-1].classList.add('cur');if(ln===7)ls[5].classList.add('cur');$('#flowSay').innerHTML=SAY[ln];
+      if(ln===2||ln===4){diaSeen.add(ln);if(diaSeen.size===2)award('fdia')}};
+    n.onclick=pick;n.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick()}}});
+  $('#flowM1').innerHTML=chainSVG({id:"a",start:"Input age",conds:[{c:"age >= 12?",t:"print You can play"}],els:"print Too young",label:"Flowchart: input age. Diamond age at least 12: True prints You can play, False prints Too young."});
+  $('#match1').appendChild(choice({code:true,onRight:()=>award('m1'),q:"",ans:0,
+    opts:[`age = int(input())
+if age >= 12:
+    print("You can play")
+else:
+    print("Too young")`,`age = int(input())
+if age < 12:
+    print("You can play")
+else:
+    print("Too young")`,`age = int(input())
+if age >= 12:
+    print("You can play")
+print("Too young")`],
+    why:" A matches: one diamond, one if, and the False path is the else. B asks the opposite question. In C, Too young is not inside an else, so it prints every time."}));
+  $('#flowM2').innerHTML=chainSVG({id:"b",start:"Input temp",conds:[{c:"temp >= 30?",t:"print Hot"},{c:"temp >= 20?",t:"print Warm"}],els:"print Cold",label:"Flowchart: input temp. Diamond temp at least 30: True prints Hot, False goes to diamond temp at least 20: True prints Warm, False prints Cold."});
+  $('#match2').appendChild(choice({code:true,onRight:()=>award('m2'),q:"",ans:0,
+    opts:[`temp = int(input())
+if temp >= 30:
+    print("Hot")
+elif temp >= 20:
+    print("Warm")
+else:
+    print("Cold")`,`temp = int(input())
+if temp >= 20:
+    print("Warm")
+elif temp >= 30:
+    print("Hot")
+else:
+    print("Cold")`,`temp = int(input())
+if temp >= 30:
+    print("Hot")
+if temp >= 20:
+    print("Warm")
+else:
+    print("Cold")`],
+    why:" A asks the same questions in the same order. In B the order is swapped, so 35 prints Warm. In C there are two separate ifs, so 35 prints Hot AND Warm."}));
+})();
+
+/* ---------- 4. player ---------- */
+(function(){const root=$('#player'),T=TRACES.score,lines=T.src.split("\n");let steps=T.runs["85"],runKey="85";
+  root.innerHTML=`<div><div class="pc"></div><div class="row" style="margin-top:10px">
+    <button class="btn alt" data-a="back">Back</button><button class="btn" data-a="next">Next step</button><button class="btn alt" data-a="play">Play</button><button class="btn alt" data-a="restart">Restart</button>
+    <span data-a="count" style="margin-left:auto;font-weight:700;font-size:16px"></span></div></div>
+    <div><div class="panel"><h4>What Python does</h4><div class="say"></div></div><div class="panel"><h4>Variables</h4><div class="vars"></div></div><div class="panel"><h4>Output</h4><pre class="pout"></pre></div></div>`;
+  const pre=codeBlock(T.src,{levels:true});root.querySelector('.pc').appendChild(pre);const ls=[...pre.querySelectorAll('.ln')];
+  const say=root.querySelector('.say'),vb=root.querySelector('.vars'),po=root.querySelector('.pout'),cnt=root.querySelector('[data-a="count"]'),pb=root.querySelector('[data-a="play"]');
+  let k=0,tm=null;
+  function explain(i){const s=steps[i],n=steps[i+1];if(s.line===0)return"The program has finished.";const t=lines[s.line-1].trim(),nl=n?n.line:0;
+    if(/^(if|elif)\b/.test(t)){const c=t.replace(/^(if|elif)\s+/,'').replace(/:$/,'');const ins=nl===s.line+1;
+      return`Python asks: <code>${esc(c)}</code>? The answer is <b>${ins?'True':'False'}</b>, so it ${ins?'goes inside and runs the indented line':'skips the line inside and moves on'}.`}
+    if(s.line>1&&lines[s.line-2].trim()==="else:")return"Every condition above was False, so Python runs the <code>else</code> part.";
+    if(t.includes("input(")){const typed=n?n.out.slice(s.out.length).split("\n")[0].replace(/^.*: /,''):'';return`input() asks the player. They type <b>${esc(typed)}</b>. int() turns it into a number.`}
+    if(lvl(lines[s.line-1])===0&&t.startsWith("print("))return"This line has no spaces, so it is not inside any branch. It runs every time.";
+    if(t.startsWith("print("))return"print() shows text in the output. After this, Python jumps past the rest of the if, elif and else.";
+    return"Run this line."}
+  function draw(){const s=steps[k];ls.forEach((e,i)=>e.classList.toggle('cur',i+1===s.line));say.innerHTML=explain(k);
+    const prev=k>0?steps[k-1].vars:{};vb.replaceChildren();
+    T.keep.filter(n=>n in s.vars).forEach(n=>{const d=document.createElement('div');d.className='var'+(k>0&&prev[n]!==s.vars[n]?' changed':'');d.innerHTML=`<div class="k">${esc(n)}</div><div class="v">${esc(s.vars[n])}</div>`;vb.appendChild(d)});
+    if(!vb.children.length)vb.innerHTML='<span style="color:var(--muted);grid-column:1/-1">No variables yet.</span>';
+    po.textContent=s.out||'';po.scrollTop=po.scrollHeight;cnt.textContent=`Step ${k+1} of ${steps.length}`;
+    if(k===steps.length-1)award('t'+runKey)}
+  const stop=()=>{clearInterval(tm);tm=null;pb.textContent='Play'};const nx=()=>{if(k<steps.length-1){k++;draw()}else stop()};
+  root.querySelector('[data-a="next"]').onclick=()=>{stop();nx()};root.querySelector('[data-a="back"]').onclick=()=>{stop();if(k>0){k--;draw()}};
+  root.querySelector('[data-a="restart"]').onclick=()=>{stop();k=0;draw()};
+  pb.onclick=()=>{if(tm)return stop();if(k>=steps.length-1){k=0;draw()}pb.textContent='Pause';tm=setInterval(nx,1200)};
+  $$('.pick').forEach(b=>b.onclick=()=>{$$('.pick').forEach(x=>x.classList.toggle('on',x===b));stop();runKey=b.dataset.run;steps=T.runs[runKey];k=0;draw()});
+  draw()})();
+
+/* ---------- 5. parsons ---------- */
+(function(){const SOL=[['colour = input("Pick a colour: ")',0],['if colour == "red":',0],['print("Fire House")',1],['elif colour == "blue":',0],['print("Water House")',1],['else:',0],['print("Sky House")',1]];
+  let items=[];const box=$('#pz');let runner=null;
+  function mix(){items=SOL.map(([t])=>({t,l:0}));for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]]}
+    if(items.every((x,i)=>x.t===SOL[i][0]))return mix();$('#pzFb').replaceChildren();draw()}
+  function draw(marks){box.replaceChildren();items.forEach((it,i)=>{const r=document.createElement('div');r.className='pline'+(marks?(marks[i]?' good':' badp'):'');
+    r.innerHTML=`<span class="ctl"><button aria-label="Move up" ${i===0?'disabled':''}>↑</button><button aria-label="Move down" ${i===items.length-1?'disabled':''}>↓</button></span><span class="lvl">L${it.l}</span><code>${esc('    '.repeat(it.l)+it.t)}</code><span class="ctl"><button aria-label="Indent less">←</button><button aria-label="Indent more">→</button></span>`;
+    const [up,dn]=r.querySelectorAll('.ctl')[0].children,[le,ri]=r.querySelectorAll('.ctl')[1].children;
+    up.onclick=()=>{[items[i-1],items[i]]=[items[i],items[i-1]];draw()};dn.onclick=()=>{[items[i+1],items[i]]=[items[i],items[i+1]];draw()};
+    le.onclick=()=>{it.l=Math.max(0,it.l-1);draw()};ri.onclick=()=>{it.l=Math.min(2,it.l+1);draw()};box.appendChild(r)})}
+  $('#pzCheck').onclick=()=>{const marks=items.map((it,i)=>it.t===SOL[i][0]&&it.l===SOL[i][1]);const good=marks.filter(Boolean).length;draw(marks);
+    const fb=document.createElement('div');fb.className='fb '+(good===SOL.length?'ok':'no');
+    if(good===SOL.length)award('pz');
+    fb.innerHTML=good===SOL.length?'<b>Correct! Every line is in the right place, with the right spaces.</b>Click Run my code. Then change the input to purple and run it again.':`<b>${good} of ${SOL.length} lines are right (green).</b>Check the red lines. Is the order right? Are the spaces right? Use the pseudocode.`;
+    $('#pzFb').replaceChildren(fb)};
+  $('#pzRun').onclick=()=>{const code=items.map(it=>'    '.repeat(it.l)+it.t).join("\n");
+    if(!runner){runner=makeRunner(code,{name:"my_sorting_hat.py",inputs:"blue"});$('#pzRunner').appendChild(runner)}else runner.setCode(code);
+    runner.querySelector('.run').click();award('pzrun')};
+  $('#pzMix').onclick=mix;mix()})();
+
+/* ---------- 6. build stepper ---------- */
+function miniRunner(getSrc,input){const box=document.createElement('div');box.className='mini';
+  box.innerHTML=`<div class="mbar"><label>Type this when it asks: <input type="text" value="${esc(input)}" spellcheck="false" autocomplete="off"></label><button class="rbtn run" type="button">Run</button></div><pre class="out"><span class="note">Click Run.</span></pre>`;
+  const inp=box.querySelector('input'),out=box.querySelector('.out'),rb=box.querySelector('.run');
+  rb.onclick=async()=>{rb.disabled=true;out.replaceChildren();curOut=out;if(!window.__py)window.runnerOut("Loading Python (10 to 30 seconds the first time)...","note");
+    try{const py=await loadPy();window.__py=true;out.replaceChildren();curOut=out;py.globals.get("run_student")(getSrc(),inp.value)}
+    catch(e){out.replaceChildren();window.runnerOut("Python could not load. Use Thonny.","err")}curOut=null;rb.disabled=false};
+  return box}
+const BS=[
+ {id:"s1",name:"Two houses",code:CODE.hat2,nw:[],steps:['Type this code in Thonny.','Run it. Type <span class="exp">red</span>.'],q:'Does it print <span class="exp">Fire House</span>?',inp:"red",
+  hint:'Check the colon at the end of the <code>if</code> and <code>else</code> lines, and the 4 spaces before each <code>print</code>.'},
+ {id:"s2",name:"Add more houses",code:CODE.hat3,nw:[4,5,6,7],steps:['Add the <b>yellow</b> lines to your code.','Run it. Type <span class="exp">blue</span>.'],q:'Does it print <span class="exp">Water House</span>?',inp:"blue",
+  hint:'<code>elif</code> lines start at the left edge, like the <code>if</code>. Check the colons, and <code>==</code> (two equals signs).'},
+ {id:"s3",name:"Make it yours",code:CODE.bot,nw:[],swap:true,edit:true,steps:['Type this bot in Thonny.','Change the question and the 3 replies to your idea: a snack, game or song bot.','Run it. Try every answer.'],q:'Does every answer get the right reply?',inp:"happy",
+  hint:'Each <code>==</code> must match exactly what you type, with the same small letters. Anything else goes to the <code>else</code>.'},
+ {id:"bonus",name:"Bonus: password checker",code:CODE.pw,nw:[],bonus:true,steps:['Finished early? Type this in Thonny.','Run it. Type <span class="exp">sunshine</span>.'],q:'Does it print <span class="exp">Medium</span>?',inp:"sunshine",
+  hint:'<code>len(password)</code> counts the letters. sunshine has 8.',extra:'Challenge: make <code>password123</code> print <b>Too easy to guess!</b> Hint: the new check must go first.'}];
+let bcur=Math.min(store.get('bstage',0),BS.length-1);
+const bOk=s=>s.bonus?store.get('bonus',false):done.has(s.id);
+function bDraw(){
+  $('#bStepper').innerHTML=BS.map((s,i)=>`<button class="${i===bcur?'on':''} ${bOk(s)?'ok':''}" data-b="${i}"><span class="c">${bOk(s)?'✓':(s.bonus?'⭐':i+1)}</span>${esc(s.name)}</button>`).join('');
+  $$('#bStepper button').forEach(b=>b.onclick=()=>{bcur=+b.dataset.b;store.set('bstage',bcur);bDraw()});
+  const st=BS[bcur],ok=bOk(st);let ed=st.code;
+  const left=document.createElement('div');left.innerHTML=`<div class="blab">${st.bonus?'Bonus':'Stage '+(bcur+1)+' of 3'} · ${esc(st.name)}</div>`;left.appendChild(codeBlock(st.code,{levels:true,newLines:st.nw}));
+  const right=document.createElement('div');right.className='bdo';
+  right.innerHTML=`${st.swap?'<span class="swapnote">Swap driver first</span>':''}<ol class="bsteps">${st.steps.map(x=>`<li>${x}</li>`).join('')}<li>${st.q}</li></ol>
+    <div class="row"><button class="btn" data-yes>✓ Yes${bcur<2?', next stage':''}</button><button class="btn alt" data-no>✗ No</button></div>
+    <div class="bhint" style="display:none"><b>Let's fix it.</b> ${st.hint}</div>
+    ${ok&&!st.bonus&&bcur===2?'<div class="bdone">All 3 stages done! Try the Bonus, or click Next.</div>':''}
+    ${st.extra?`<p style="margin:14px 0 0">${st.extra}</p><button class="btn alt sm" style="margin-top:8px" data-ans>Show a possible answer</button><div class="reveal" style="background:none;padding:0" data-ansbox></div>`:''}
+    <p style="margin:14px 0 0;font-size:16px;color:var(--muted)">No Thonny? Test it here:</p>`;
+  right.appendChild(miniRunner(()=>st.code,st.inp));
+  const g=document.createElement('div');g.className='bgrid';g.appendChild(left);g.appendChild(right);$('#bStage').replaceChildren(g);
+  right.querySelector('[data-no]').onclick=()=>{right.querySelector('.bhint').style.display='block'};
+  right.querySelector('[data-yes]').onclick=()=>{if(st.bonus){store.set('bonus',true);toast('⭐ Bonus done!');confetti();bDraw();return}
+    award(st.id);if(bcur<2){bcur++;store.set('bstage',bcur)}bDraw()};
+  const ab=right.querySelector('[data-ans]');if(ab){const box=right.querySelector('[data-ansbox]');box.appendChild(codeBlock(CODE.pw3,{levels:true}));ab.onclick=()=>box.classList.toggle('show')}}
+bDraw();
+
+/* ---------- 8. test every branch ---------- */
+const TC=[
+ {k:"g1",inp:"red",exp:"Fire House",br:"the if",hint:'Find the line <code>if colour == "red":</code>. Is red spelt the same, with <code>==</code> and a colon at the end? Fix it, run again, then click Yes.'},
+ {k:"g2",inp:"blue",exp:"Water House",br:"the first elif",hint:'Find the line <code>elif colour == "blue":</code>. Check the spelling, the <code>==</code> and the colon. Is the print line indented under it?'},
+ {k:"g3",inp:"green",exp:"Forest House",br:"the second elif",hint:'Find the line <code>elif colour == "green":</code>. Check the spelling, the <code>==</code> and the colon. Is the print line indented under it?'},
+ {k:"g4",inp:"purple",exp:"Sky House",br:"the else",hint:'Check the <code>else:</code> line. It has no condition, just a colon. Is <code>print("Sky House")</code> indented under it?'},
+ {k:"g5",inp:"Red",exp:"Sky House",br:"a surprise: capital R",hint:'Did it print Fire House? Then you added <code>.lower()</code> (the two-star challenge), so capitals now work. That is fine: click Yes. If not, check the else.'}];
+let hdone=new Set(store.get('haunt',[])),hbad=new Set();
+let hRunner=null;
+function hDraw(){
+  const n=TC.filter(t=>hdone.has(t.k)).length;
+  $('#pumps').innerHTML=TC.map(t=>`<span class="p${hdone.has(t.k)?' lit':''}" aria-hidden="true">🎃</span>`).join('')+`<span class="lbl">${n} of ${TC.length} branches tested</span>`;
+  $('#trows').innerHTML=TC.map((t,i)=>{const ok=hdone.has(t.k),bad=!ok&&hbad.has(t.k);
+    return `<div class="trow${ok?' yes':''}${bad?' bad':''}"><span class="n">${ok?'✓':i+1}</span>
+      <div><span class="cl">Type this</span><span class="inp">${esc(t.inp)}</span></div>
+      <div><span class="cl">Expected</span><span class="exp2">${esc(t.exp)}</span></div>
+      <div><span class="cl">Tests</span>${esc(t.br)}</div>
+      <div class="yn"><button class="y" data-y="${i}">✓ Yes</button><button class="no" data-n="${i}">✗ No</button></div>
+      ${bad?`<div class="hint"><b>Let's fix it.</b> ${t.hint}<br><span style="color:var(--muted);font-size:16px">Red error text instead? Read the line number in the error and check that line.</span></div>`:''}</div>`}).join('');
+  $$('#trows [data-y]').forEach(b=>b.onclick=()=>{const t=TC[+b.dataset.y];hbad.delete(t.k);if(hdone.has(t.k))return;hdone.add(t.k);store.set('haunt',[...hdone]);hDraw();
+    if(TC.every(x=>hdone.has(x.k))){award('haunt');spookyConfetti()}else toast(`🎃 ${TC.filter(x=>hdone.has(x.k)).length} of ${TC.length} branches tested`)});
+  $$('#trows [data-n]').forEach(b=>b.onclick=()=>{const t=TC[+b.dataset.n];hdone.delete(t.k);hbad.add(t.k);store.set('haunt',[...hdone]);hDraw()});
+  const all=TC.every(t=>hdone.has(t.k));$('#tdone').innerHTML=all?'🎃 All 5 branches tested. Your sorting hat works! Go to Step 2.':'';$('#tdone').classList.toggle('show',all)}
+function spookyConfetti(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  for(let i=0;i<34;i++){const c=document.createElement('div');c.className='confetti';c.textContent=['🎃','👻','🦇','🍬'][i%4];c.style.cssText+=`left:${Math.random()*100}vw;width:auto;height:auto;font-size:${18+Math.random()*14}px;background:none;animation-delay:${Math.random()*.5}s`;document.body.appendChild(c);setTimeout(()=>c.remove(),2400)}}
+hRunner=makeRunner(CODE.hat3,{name:"sorting_hat.py · stage 2",hide:true,inputs:"red"});$('#hrunner').appendChild(hRunner);
+hDraw();
+$('#swapTick').checked=done.has('swap');$('#swapTick').onchange=e=>{if(e.target.checked)award('swap')};
+
+/* ---------- 7, 8. tests and exit ---------- */
+const shown={pwtests:new Set(),tests:new Set()};
+$$('[data-show]').forEach((b,i)=>b.onclick=()=>{b.nextElementSibling.classList.toggle('show');const tb=b.closest('table').id;if(!shown[tb])return;shown[tb].add(i);
+  const need=$$('#'+tb+' [data-show]').length;if(shown[tb].size>=need)award(tb)});
+const E=[["What does elif mean?","\"else if\". Python checks it only when the conditions above were False."],
+ ["In the score program, score is 65. What prints?","Pass. 65 >= 80 is False, then 65 >= 50 is True."],
+ ["Why do we test red, blue, green AND purple?","So that every branch runs at least once, including the else."]];
+$('#exit').innerHTML=E.map(([q,a])=>`<div style="padding:8px 0;border-bottom:1px solid var(--line)"><button class="opt" style="width:100%">${esc(q)}</button><div class="reveal">${esc(a)}</div></div>`).join('');
+const exitSeen=new Set();
+$$('#exit .opt').forEach((b,i)=>b.onclick=()=>{b.nextElementSibling.classList.toggle('show');exitSeen.add(i);if(exitSeen.size===E.length)award('exit')});
+
+$$('.kw').forEach(b=>b.onclick=()=>b.setAttribute('aria-expanded',String(b.getAttribute('aria-expanded')!=='true')));
+
+/* teacher notes: wrap each part so notes sit beside it */
+const tnBtn=$('#tn');
+secs.forEach(s=>{const aside=s.querySelector('.tnotes');if(!aside)return;const w=document.createElement('div');w.className='sec-main';
+  [...s.childNodes].forEach(n=>{if(n!==aside)w.appendChild(n)});s.insertBefore(w,aside)});
+if(tnBtn){
+  function setNotes(on){document.body.classList.toggle('notes',on);tnBtn.setAttribute('aria-pressed',String(on));tnBtn.textContent=on?'Hide notes':'Teacher notes';store.set('notes',on)}
+  tnBtn.onclick=()=>setNotes(!document.body.classList.contains('notes'));
+  document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.key==='n'||e.key==='N')setNotes(!document.body.classList.contains('notes'))});
+  setNotes(store.get('notes',false));
+}
+/* ---------- step buttons inside a part ---------- */
+$$('[data-stepper]').forEach(sp=>{const sec=sp.closest('section'),key='st_'+sp.dataset.stepper,panes=[...sec.querySelectorAll('.pane')];let c=Math.min(store.get(key,0),panes.length-1);
+  const okOf=p=>!!p.dataset.ok&&p.dataset.ok.split(',').every(id=>done.has(id));
+  panes.forEach((p,i)=>{if(i<panes.length-1){const d=document.createElement('div');d.className='pnext';d.innerHTML=`<button class="btn">Next step: ${esc(panes[i+1].dataset.name)} →</button>`;d.querySelector('button').onclick=()=>show(i+1,true);p.appendChild(d)}});
+  function show(i,scroll){c=i;store.set(key,c);panes.forEach((p,k)=>p.classList.toggle('on',k===c));
+    sp.innerHTML=panes.map((p,k)=>`<button class="${k===c?'on':''} ${okOf(p)?'ok':''}" data-i="${k}"><span class="c">${okOf(p)?'✓':k+1}</span>${esc(p.dataset.name)}</button>`).join('');
+    sp.querySelectorAll('button').forEach(b=>b.onclick=()=>show(+b.dataset.i,true));if(scroll)window.scrollTo({top:0})}
+  sp._refresh=()=>show(c,false);sp._reset=()=>show(0,false);show(c,false)});
+drawMissions();drawAura(false);
+$('#resetAll').onclick=()=>{done=new Set();store.set('done',[]);store.set('houses',[]);store.set('haunt',[]);store.set('bstage',0);store.set('bonus',false);bcur=0;$$('[data-stepper]').forEach(sp=>sp._reset&&sp._reset());hdone=new Set();hbad=new Set();hDraw();$('#swapTick').checked=false;bDraw();houses=new Set();drawShelf();drawMissions();drawAura(false);toast('Progress cleared. Fresh start!')};
+go(cur);
+})();
 </script>
 </body>
 </html>
