@@ -369,9 +369,15 @@ nav.steps button.done .num span{display:none}
 <body>
 <header>
   <div class="bar">
-    <div class="brand"><b>Python: if, elif, else</b><span>Year 7 Digital Technologies · Python IV · Student copy</span></div>
+    <div class="brand"><b>Python: if, elif, else</b><span>Year 7 Digital Technologies · Python IV<span id="verTag"></span></span></div>
     <div class="aura" id="aura" title="Your aura points. Finish missions to level up."><span class="lv" id="auraLvl">🥚 Egg</span><b id="auraPts">0</b> aura</div>
-    
+    <div class="timer" id="timer" title="Timer for this part of the lesson">
+      <span id="tleft">1:00</span>
+      <button id="tgo" aria-label="Start or pause timer">Start</button>
+      <button id="treset" aria-label="Reset timer">Reset</button>
+    </div>
+    <button class="iconbtn" id="tn" aria-pressed="false" title="Show or hide teacher notes (key: N)">Teacher notes</button>
+    <button class="iconbtn" id="fs" title="Full screen">Full screen</button>
   </div>
   <nav class="steps" id="steps" aria-label="Lesson parts"></nav>
   <div class="progress"><i id="prog"></i></div>
@@ -387,12 +393,13 @@ nav.steps button.done .num span{display:none}
     <div class="map" id="map"></div>
     <div class="card">
       <h3>How it works</h3>
-      <p>👥 Work in pairs. The <b>Driver</b> types. The <b>Navigator</b> checks.</p>
+      <p>💻 Work on your own computer.</p>
       <p>➡️ Click <b>Next</b> at the bottom to move on.</p>
       <p>🐸 Earn <b>aura</b> as you go: 🥚 Egg → 🐣 Tadpole → 🐸 Frog → 👑 Frog King.</p>
       <button class="btn alt sm" id="resetAll" style="margin-top:8px">Start fresh</button>
     </div>
   </div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>Every part has the same layout: a title, one instruction line, then the activity. Parts with several steps have step buttons under the title; students click <b>Next step</b> or the step buttons. Learning goals: write if, elif and else with comparison operators; match code to a flowchart; trace which branch runs; write pseudocode first; test every branch.</p><p>Press <b>Start</b> on the timer at the start of each part. The page remembers the current part if the browser is refreshed.</p><h4>Real life</h4><p>Before class: click Run on any program once so Python is loaded (first time 10 to 30 seconds). If the network blocks it, students use <b>Copy</b> and paste into Thonny.</p><p>Individual lesson: one student per computer. With 24 students and 19 computers, 5 students need a plan (a second rotation, borrowed laptops, or doing the Puzzle and Test steps on paper while others build).</p><h4>Ask the class</h4><p>"Name one app on your phone that makes a decision about you." (TikTok For You page, YouTube suggestions, game matchmaking, a lock screen that checks your face.)</p></aside>
 </section>
 
 <!-- 1 WARM-UP -->
@@ -422,6 +429,7 @@ nav.steps button.done .num span{display:none}
       <div class="feedback" id="hookSay" style="font-weight:400"></div>
     </div>
   </div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>The hook: students get sorted first, then see the code that did it. The hat "thinks" through the code one condition at a time, marking each one <b>TRUE</b> or <b>FALSE</b>, then the line that <b>RUNS</b>. Lines that are never checked are marked <b>SKIPPED</b>.</p><p>The missions push them to collect all four houses: without knowing it, they are testing every branch, which is exactly what the Test part asks for.</p><p>The secret trap is typing <code>Red</code> (or <code>BLUE</code>). They land in Sky House because capital letters matter.</p><h4>Real life</h4><p>A game choosing your team, or Netflix choosing what to show you next: the app checks your answer and picks one path.</p><h4>Ask the class</h4><ul><li>"Pick blue. How many conditions did Python check?" (2: red was False, blue was True.)</li><li>"Pick purple. Why did the else run?" (Every condition above was False.)</li><li>"Can one colour get two houses?" (No. Only one branch ever runs.)</li><li>"Who found the trap? What did you type?"</li></ul></aside>
 </section>
 
 <!-- 2 REVIEW -->
@@ -440,6 +448,7 @@ nav.steps button.done .num span{display:none}
     <div class="row" style="margin-top:10px"><button class="btn" id="qNext" disabled>Next question</button><button class="btn alt" id="qAgain">Start again</button></div>
   </div>
   <div class="remember"><b>Remember:</b> <code>==</code> compares, <code>=</code> stores · Python runs <b>only the first True branch</b> · <code>else</code> has no condition · every <code>if</code>, <code>elif</code>, <code>else</code> ends with a colon</div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>This one game replaces the first three sections of last lesson's page (video, operators, how it works). The "Remember" card underneath is the summary to point at.</p><p>Each student plays on their own screen. Or play once on the projector: everyone shows 1 to 4 fingers, then one student clicks. The streak counter rewards a run of right answers; cheer for a streak of 3.</p><p>Video for anyone who missed last lesson: <a href="https://www.youtube.com/watch?v=FvMPfrgGeKs" target="_blank" rel="noopener">If statements in Python are easy (Bro Code)</a>.</p><h4>Real life</h4><p><b>A lift door.</b> If someone is in the way, stay open. Else, close. The lift checks one condition and picks one path, every single time.</p><h4>Ask the class</h4><ul><li>After Q3: "So why did Red go to Sky House in the warm-up?"</li><li>After Q6: "Why does 95 not print Pass as well? 95 is bigger than 50." (Python stops at the first True branch.)</li></ul><h4>Answers</h4><p>1 False · 2 True · 3 False · 4 x == 5 · 5 Excellent · 6 1 line · 7 colon · 8 else</p></aside>
 </section>
 
 <!-- 3 FLOWCHART + TRACE -->
@@ -466,6 +475,7 @@ nav.steps button.done .num span{display:none}
     <div class="row" style="margin-bottom:12px"><span style="font-weight:700">The player types:</span><button class="pick on" data-run="85">85</button><button class="pick" data-run="60">60</button><button class="pick" data-run="30">30</button></div>
     <div class="two" id="player"></div>
   </div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>One rule: <b>one diamond = one if or elif</b>. The True arrow goes to the indented lines under it. The False arrow goes to the next elif, or to the else.</p><p>The else has no diamond. It is just where the last False arrow ends.</p><h4>Real life</h4><p><b>A road junction with signs.</b> At each junction (diamond) you either turn (True) or drive on to the next junction (False). If you pass every junction, you end up at the last stop (else).</p><h4>Ask the class</h4><ul><li>"How many diamonds? How many if and elif lines?" (2 and 2)</li><li>Match 2, option B: "Try 35 degrees in this code. What prints?" (Warm. 35 &gt;= 20 is True first, so Hot is never reached. Order matters.)</li><li>Option C: "Try 35. What prints?" (Hot and Warm. Two separate ifs can both run.)</li></ul><h4>Answers</h4><p>Match 1: A · Match 2: A</p><h4>Explain</h4><p>Run it on the projector and click <b>Next step</b> yourself. Before every click, the class calls out the next line number.</p><p>With 85, Python jumps from line 3 straight to line 8. Lines 4 to 7 are never even checked. With 30, it checks line 2 and line 4 (both False), then runs line 7.</p><p>Line 8 has no spaces, so it is not inside any branch: it always runs.</p><h4>Real life</h4><p><b>A football replay.</b> The referee watches frame by frame to see exactly what happened. Tracing is a slow-motion replay of a program.</p><h4>Ask the class</h4><ul><li>"With 60, which line runs after line 2?" (4, the elif)</li><li>"Which input makes the else run?" (30, or any number below 50)</li><li>"Which line runs every time?" (line 8, Done!)</li></ul></aside>
 </section>
 
 <!-- 4 PUZZLE -->
@@ -494,13 +504,15 @@ nav.steps button.done .num span{display:none}
       <div id="pzRunner"></div>
     </div>
   </div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>A <b>Parsons puzzle</b>: students arrange given lines, so they focus on <b>order</b> and <b>indentation</b>, with no typing errors. Good for students who freeze in front of an empty file.</p><p>Students read the pseudocode first, then move the lines. <b>Run my code</b> runs their version, so a wrong order gives a real error.</p><h4>Real life</h4><p><b>A recipe cut into strips.</b> All the steps are there, but you must put them in order and decide which steps go <i>under</i> "if the oven is hot".</p><h4>Ask the class</h4><ul><li>"Which line has to come first? Why?" (the input: you cannot check a colour you have not asked for)</li><li>"Can the else go before the elif?" (No. else is always last.)</li></ul><h4>Answer (line: indent)</h4><p>colour = input: 0 · if red: 0 · print Fire: 1 · elif blue: 0 · print Water: 1 · else: 0 · print Sky: 1</p></aside>
 </section>
 
 <!-- 5 BUILD -->
-<section data-title="5. Build in Thonny (Swap)" data-short="Build" data-min="20" data-m="build">
+<section data-title="5. Build in Thonny" data-short="Build" data-min="20" data-m="build">
   <h2>Build the sorting hat in Thonny</h2>
   <div class="stepper" id="bStepper"></div>
   <div id="bStage"></div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>Small steps, test often: if it breaks, the bug can only be in the newest lines.</p><p><b>Stage 3 is where interest comes from.</b> Students write their own question and their own replies. Let them be silly: a snack bot, a game bot, a "which footballer are you" bot. Keep it school-appropriate. The structure must stay: one if, at least two elif, one else.</p><p>One stage at a time. Students click <b>Yes</b> when their Thonny output matches, and the next stage opens. <b>No</b> shows a short fix-it hint. Every student must reach Stage 2. Fast finishers open the Bonus.</p><h4>Real life</h4><p><b>Spotify or YouTube recommendations.</b> They ask (or watch) what you like, then pick one answer for you. Real apps use thousands of conditions; ours uses four.</p><h4>Ask the class</h4><p>Walk round with one question: "Show me the line that runs if I type something you did not plan for." (the else)</p><h4>Common bugs</h4><ul><li>Missing colon after if, elif or else.</li><li><code>=</code> instead of <code>==</code> in the condition (SyntaxError).</li><li>print not indented under its if.</li><li>Typing <code>Happy</code> when the code checks <code>"happy"</code> (the else runs). Fix: .lower()</li><li>else with a condition: <code>else mood == "bored":</code> (SyntaxError)</li></ul><h4>Explain</h4><p>This links ahead to Week 9 (footprints and locks). The order of the branches matters: the <code>password123</code> check must come <b>first</b>, because password123 has 11 characters and would be caught by the Medium branch.</p><p><code>len()</code> is new: it counts characters. Show <code>len("cat")</code> in the Thonny Shell.</p><h4>Real life</h4><p>The coloured bar under a "create password" box on a website: red, orange, green. It is a set of if and elif checks like this one.</p><h4>Ask the class</h4><ul><li>"Why is 12 characters Strong but 11 only Medium?" (12 &gt;= 12 is True; 11 &gt;= 12 is False)</li><li>"Is long always strong?" (No: aaaaaaaaaaaa is 12 characters and very weak. Real checkers test more.)</li></ul></aside>
 </section>
 
 <!-- 6 TEST -->
@@ -517,12 +529,12 @@ nav.steps button.done .num span{display:none}
     <div class="tdone" id="tdone"></div>
     <details class="nothonny"><summary>No Thonny? Run the sorting hat here</summary><div id="hrunner"></div></details>
   </div>
-  <div class="pane" data-name="Test a friend's bot" data-ok="swap">
-    <p class="inst">Swap computers with another pair. Test their bot with <b>every answer</b>, plus <b>one answer they did not plan for</b>.</p>
-    <div class="card"><label class="tick2"><input type="checkbox" id="swapTick"> We tested a friend's bot and told them what we found</label></div>
+  <div class="pane" data-name="Test your bot" data-ok="swap">
+    <p class="inst">Now test your own bot from Stage 3. Type <b>every answer</b> you planned, plus <b>one answer you did not plan for</b>. Does each one get the right reply?</p>
+    <div class="card"><label class="tick2"><input type="checkbox" id="swapTick"> I tested every branch of my bot, and it works</label></div>
   </div>
   <div class="pane" data-name="Exit questions" data-ok="exit">
-    <p class="inst">Say your answer to your partner first. Then click the question to check.</p>
+    <p class="inst">Think of your answer first. Then click the question to check.</p>
     <div class="card"><div id="exit"></div></div>
   </div>
   <div class="pane" data-name="Save and finish">
@@ -530,6 +542,7 @@ nav.steps button.done .num span{display:none}
     <div class="result" id="finalCard"></div>
     <div class="remember" style="margin-top:14px"><b>Remember:</b> Python checks the conditions <b>from the top</b> and runs <b>only the first True branch</b>. If none are True, the <code>else</code> runs. Next time: a <b>Halloween chatbot</b>.</div>
   </div>
+  <aside class="tnotes" aria-label="Teacher notes"><div class="tn-head">Teacher notes</div><h4>Explain</h4><p>The key testing idea: <b>one test case per branch</b>. Four branches means at least four tests. Ghost 5 (Red) shows why testers also try things the programmer did not plan for.</p><p>Four steps, one at a time. Step 1 is the main one: for each row, students run their Stage 2 sorting hat in Thonny, type the colour, and click Yes if the output matches the expected output. A pumpkin lights up for each branch tested. Clicking No opens a short fix-it hint for that row.</p><p>The runner under the table is the backup for any computer where Thonny will not open.</p><h4>Real life</h4><p>Engineers testing a lift press <b>every</b> floor button, not only the ground floor. Every branch needs a test.</p><h4>Ask the class</h4><ul><li>"Your bot has 1 if, 2 elif and 1 else. How many test cases at least?" (4)</li><li>"Which row needed a fix? What was the bug?"</li></ul><h4>Exit answers</h4><ol><li>"else if". Python checks it only when the conditions above were False.</li><li>Pass. 65 &gt;= 80 is False, 65 &gt;= 50 is True.</li><li>So that every branch runs at least once, including the else.</li></ol></aside>
 </section>
 
 </main>
@@ -611,6 +624,10 @@ def run_student(src, preset):
 (function(){
 const TRACES = {"score": {"src": "score = int(input(\"Score out of 100: \"))\nif score >= 80:\n    print(\"Excellent\")\nelif score >= 50:\n    print(\"Pass\")\nelse:\n    print(\"Try again\")\nprint(\"Done!\")", "keep": ["score"], "runs": {"85": [{"line": 1, "vars": {}, "out": ""}, {"line": 2, "vars": {"score": "85"}, "out": "Score out of 100: 85\n"}, {"line": 3, "vars": {"score": "85"}, "out": "Score out of 100: 85\n"}, {"line": 8, "vars": {"score": "85"}, "out": "Score out of 100: 85\nExcellent\n"}, {"line": 0, "vars": {"score": "85"}, "out": "Score out of 100: 85\nExcellent\nDone!\n"}], "60": [{"line": 1, "vars": {}, "out": ""}, {"line": 2, "vars": {"score": "60"}, "out": "Score out of 100: 60\n"}, {"line": 4, "vars": {"score": "60"}, "out": "Score out of 100: 60\n"}, {"line": 5, "vars": {"score": "60"}, "out": "Score out of 100: 60\n"}, {"line": 8, "vars": {"score": "60"}, "out": "Score out of 100: 60\nPass\n"}, {"line": 0, "vars": {"score": "60"}, "out": "Score out of 100: 60\nPass\nDone!\n"}], "30": [{"line": 1, "vars": {}, "out": ""}, {"line": 2, "vars": {"score": "30"}, "out": "Score out of 100: 30\n"}, {"line": 4, "vars": {"score": "30"}, "out": "Score out of 100: 30\n"}, {"line": 7, "vars": {"score": "30"}, "out": "Score out of 100: 30\n"}, {"line": 8, "vars": {"score": "30"}, "out": "Score out of 100: 30\nTry again\n"}, {"line": 0, "vars": {"score": "30"}, "out": "Score out of 100: 30\nTry again\nDone!\n"}]}}};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+/* teacher view: add ?teacher (or #teacher) to the link */
+const TEACHER=/(^|[?&#])teacher(\b|=|$)/i.test(location.search+location.hash);
+if(TEACHER){document.title+=' (Teacher)';document.getElementById('verTag').textContent=' · Teacher view'}
+else document.querySelectorAll('.tnotes,#timer,#tn,#fs').forEach(e=>e.remove());
 const store={get(k,d){try{const v=localStorage.getItem('y7sel_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('y7sel_'+k,JSON.stringify(v))}catch(e){}}};
 
 const CODE = {
@@ -744,7 +761,7 @@ const MISSIONS={
  flow:[["fdia","Click both diamonds",10],["m1","Solve Match 1",20],["m2","Solve Match 2",20],["t85","Trace 85",10],["t60","Trace 60",10],["t30","Trace 30",10]],
  pz:[["pz","Solve the puzzle",30],["pzrun","Run your puzzle code",10]],
  build:[["s1","Finish Stage 1",20],["s2","Finish Stage 2",20],["s3","Finish Stage 3: your own bot",30]],
- test:[["haunt","Test all 5 branches",40],["swap","Test a friend's bot",20],["exit","Check all 3 exit questions",20]]};
+ test:[["haunt","Test all 5 branches",40],["swap","Test every branch of your bot",20],["exit","Check all 3 exit questions",20]]};
 const LEVELS=[[0,"🥚 Egg"],[80,"🐣 Tadpole"],[180,"🐸 Frog"],[300,"👑 Frog King"]];
 const PTS={},SEC_OF={};Object.entries(MISSIONS).forEach(([sec,ms])=>ms.forEach(([id,,p])=>{PTS[id]=p;SEC_OF[id]=sec}));
 let done=new Set(store.get('done',[]));
@@ -1013,7 +1030,7 @@ const BS=[
   hint:'Check the colon at the end of the <code>if</code> and <code>else</code> lines, and the 4 spaces before each <code>print</code>.'},
  {id:"s2",name:"Add more houses",code:CODE.hat3,nw:[4,5,6,7],steps:['Add the <b>yellow</b> lines to your code.','Run it. Type <span class="exp">blue</span>.'],q:'Does it print <span class="exp">Water House</span>?',inp:"blue",
   hint:'<code>elif</code> lines start at the left edge, like the <code>if</code>. Check the colons, and <code>==</code> (two equals signs).'},
- {id:"s3",name:"Make it yours",code:CODE.bot,nw:[],swap:true,edit:true,steps:['Type this bot in Thonny.','Change the question and the 3 replies to your idea: a snack, game or song bot.','Run it. Try every answer.'],q:'Does every answer get the right reply?',inp:"happy",
+ {id:"s3",name:"Make it yours",code:CODE.bot,nw:[],edit:true,steps:['Type this bot in Thonny.','Change the question and the 3 replies to your idea: a snack, game or song bot.','Run it. Try every answer.'],q:'Does every answer get the right reply?',inp:"happy",
   hint:'Each <code>==</code> must match exactly what you type, with the same small letters. Anything else goes to the <code>else</code>.'},
  {id:"bonus",name:"Bonus: password checker",code:CODE.pw,nw:[],bonus:true,steps:['Finished early? Type this in Thonny.','Run it. Type <span class="exp">sunshine</span>.'],q:'Does it print <span class="exp">Medium</span>?',inp:"sunshine",
   hint:'<code>len(password)</code> counts the letters. sunshine has 8.',extra:'Challenge: make <code>password123</code> print <b>Too easy to guess!</b> Hint: the new check must go first.'}];
@@ -1025,7 +1042,7 @@ function bDraw(){
   const st=BS[bcur],ok=bOk(st);let ed=st.code;
   const left=document.createElement('div');left.innerHTML=`<div class="blab">${st.bonus?'Bonus':'Stage '+(bcur+1)+' of 3'} · ${esc(st.name)}</div>`;left.appendChild(codeBlock(st.code,{levels:true,newLines:st.nw}));
   const right=document.createElement('div');right.className='bdo';
-  right.innerHTML=`${st.swap?'<span class="swapnote">Swap driver first</span>':''}<ol class="bsteps">${st.steps.map(x=>`<li>${x}</li>`).join('')}<li>${st.q}</li></ol>
+  right.innerHTML=`<ol class="bsteps">${st.steps.map(x=>`<li>${x}</li>`).join('')}<li>${st.q}</li></ol>
     <div class="row"><button class="btn" data-yes>✓ Yes${bcur<2?', next stage':''}</button><button class="btn alt" data-no>✗ No</button></div>
     <div class="bhint" style="display:none"><b>Let's fix it.</b> ${st.hint}</div>
     ${ok&&!st.bonus&&bcur===2?'<div class="bdone">All 3 stages done! Try the Bonus, or click Next.</div>':''}
@@ -1089,7 +1106,7 @@ if(tnBtn){
   function setNotes(on){document.body.classList.toggle('notes',on);tnBtn.setAttribute('aria-pressed',String(on));tnBtn.textContent=on?'Hide notes':'Teacher notes';store.set('notes',on)}
   tnBtn.onclick=()=>setNotes(!document.body.classList.contains('notes'));
   document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName))return;if(e.key==='n'||e.key==='N')setNotes(!document.body.classList.contains('notes'))});
-  setNotes(store.get('notes',false));
+  setNotes(store.get('notes',true));
 }
 /* ---------- step buttons inside a part ---------- */
 $$('[data-stepper]').forEach(sp=>{const sec=sp.closest('section'),key='st_'+sp.dataset.stepper,panes=[...sec.querySelectorAll('.pane')];let c=Math.min(store.get(key,0),panes.length-1);
